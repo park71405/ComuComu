@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
 import java.util.Date;
@@ -29,7 +31,7 @@ public class Board {
     // 작성자
 
     // 작성일
-    @CreationTimestamp
+    @CreatedDate
     @Column(name = "regDate", nullable = false)
     private LocalDateTime regDate;
 
