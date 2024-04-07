@@ -53,4 +53,9 @@ public class Board {
         this.content = content;
     }
 
+    @PrePersist
+    public void preRegDate(){
+        this.regDate = LocalDateTime.now();
+    }
+
 }

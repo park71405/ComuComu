@@ -15,6 +15,7 @@
     <div class="row">
         <div class="col-lg-8">
             <article>
+                <input type="hidden" id="board-no" th:value="${board.no}">
                 <header class="mb-4">
                     <h1 class="fw-bolder mb-1" th:text="${board.title}"></h1>
                     <div class="text-muted fst-italic mb-2" th:text="|Posted on ${#temporals.format(board.regDate, 'yyyy-MM-dd HH:mm')}|"></div>
@@ -22,11 +23,13 @@
                 <section class="mb-5">
                     <p class="fs-5 mb-4" th:text="${board.content}"></p>
                 </section>
-                <button type="button" class="btn btn-primary btn-sm">수정</button>
-                <button type="button" class="btn btn-secondary btn-sm">삭제</button>
+                <button type="button" id="modify-btn" th:onclick="|location.href='@{/newboard?no={boardId}(boardId=${board.no})}'|" class="btn btn-primary btn-sm">수정</button>
+                <button type="button" id="delete-btn" class="btn btn-secondary btn-sm">삭제</button>
             </article>
         </div>
     </div>
 </div>
+
+<script src="/js/board.js"></script>
 </body>
 </html>

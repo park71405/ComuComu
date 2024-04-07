@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -31,13 +32,26 @@ public class BoardViewController {
     }
     
     // 게시글 단건 조회
-    @GetMapping("/board/{id}")
+    @GetMapping("/board/{no}")
     public String getBoard(@PathVariable Long no, Model model){
         Board board = boardService.finadById(no);
 
         model.addAttribute("board", new BoardViewResponse(board));
 
         return "board";
+    }
+
+    // 게시글 수정
+    @GetMapping("/newboard")
+    public String newBoard(@RequestParam(required = false) Long no, Model model){
+        if(no == null){
+            model.addAttribute("board", new BoardViewResponse());
+        }else{
+            Board board = boardService.finadById(no);
+            model.addAttribute("board", new BoardViewResponse(board));
+        }
+
+        return "newBoard";
     }
 
 }

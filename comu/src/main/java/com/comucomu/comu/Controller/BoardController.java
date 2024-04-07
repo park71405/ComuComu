@@ -19,7 +19,7 @@ public class BoardController {
     private final BoardService boardService;
 
     // 게시글 저장
-    @PutMapping("/board/save")
+    @PostMapping("/board/save")
     public ResponseEntity<Board> addBoard(@RequestBody AddBoardRequest request){
         Board savedBoard = boardService.save(request);
 
