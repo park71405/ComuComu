@@ -1,14 +1,16 @@
 package com.comucomu.comu.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedBy;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Getter
@@ -29,6 +31,10 @@ public class Board {
     private String content;
 
     // 작성자
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.SET_NULL)
+    private User user;
 
     // 작성일
     @CreatedDate
@@ -41,16 +47,22 @@ public class Board {
     private int count;
 
     // 카테고리 번호
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "category_no")
+    private Category category;
 
     @Builder
-    public Board(String title, String content) {
+    public Board(String title, String content, User user, Category category) {
         this.title = title;
         this.content = content;
+        this.user = user;
+        this.category = category;
     }
 
-    public void update(String title, String content){
+    public void update(String title, String content, Category category){
         this.title = title;
         this.content = content;
+        this.category = category;
     }
 
     @PrePersist

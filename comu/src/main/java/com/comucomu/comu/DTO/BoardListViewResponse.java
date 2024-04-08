@@ -1,6 +1,7 @@
 package com.comucomu.comu.DTO;
 
 import com.comucomu.comu.entity.Board;
+import com.comucomu.comu.entity.User;
 import lombok.Getter;
 
 @Getter
