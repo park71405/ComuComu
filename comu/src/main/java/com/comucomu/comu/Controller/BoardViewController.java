@@ -33,7 +33,7 @@ public class BoardViewController {
     
     // 게시글 단건 조회
     @GetMapping("/board/{no}")
-    public String getBoard(@PathVariable Long no, Model model){
+    public String getBoard(@PathVariable int no, Model model){
         Board board = boardService.finadById(no);
 
         model.addAttribute("board", new BoardViewResponse(board));
@@ -43,7 +43,7 @@ public class BoardViewController {
 
     // 게시글 수정
     @GetMapping("/newboard")
-    public String newBoard(@RequestParam(required = false) Long no, Model model){
+    public String newBoard(@RequestParam(required = false) Integer no, Model model){
         if(no == null){
             model.addAttribute("board", new BoardViewResponse());
         }else{

@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public class BoardListViewResponse {
 
-    private final Long no;
+    private final int no;
     private final String title;
     private final String content;
 

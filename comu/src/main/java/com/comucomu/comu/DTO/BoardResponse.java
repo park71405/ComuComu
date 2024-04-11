@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 public class BoardResponse {
 
-    private final long no;
+    private final int no;
     private final String title;
     private final String content;
     private final User user;

@@ -8,15 +8,17 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name="role")
 public class Role {
 
     // 역할 id
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id")
-    private String id;
+    private int id;
 
     // 역할 명
-    @Column(nullable = false)
+    @Column(nullable = false, name = "role_name")
     private String roleName;
 
     @OneToOne(mappedBy = "role")

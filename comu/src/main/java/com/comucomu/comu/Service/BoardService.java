@@ -27,19 +27,19 @@ public class BoardService {
     }
 
     // 게시글 단건 조회
-    public Board finadById(long no){
+    public Board finadById(int no){
         return boardRepository.findById(no)
                 .orElseThrow(() -> new IllegalArgumentException("not found: " + no));
     }
 
     // 게시글 삭제
-    public void delete(long no){
+    public void delete(int no){
         boardRepository.deleteById(no);
     }
 
     // 게시글 수정
     @Transactional
-    public Board update(long no, UpdateBoardReqeust request){
+    public Board update(int no, UpdateBoardReqeust request){
         Board board = boardRepository.findById(no)
                 .orElseThrow(() -> new IllegalArgumentException("not found : " + no));
 

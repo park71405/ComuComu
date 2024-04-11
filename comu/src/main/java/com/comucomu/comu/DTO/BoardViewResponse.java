@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Getter
 public class BoardViewResponse {
 
-    private Long no;
+    private int no;
     private String title;
     private String content;
     private LocalDateTime regDate;

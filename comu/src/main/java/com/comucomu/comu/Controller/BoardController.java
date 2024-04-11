@@ -41,7 +41,7 @@ public class BoardController {
 
     // 게시글 단건 조회
     @GetMapping("/board/search/{no}")
-    public ResponseEntity<BoardResponse> findBoard(@PathVariable long no){
+    public ResponseEntity<BoardResponse> findBoard(@PathVariable int no){
         Board board = boardService.finadById(no);
 
         return ResponseEntity.ok()
@@ -50,7 +50,7 @@ public class BoardController {
 
     // 게시글 삭제
     @DeleteMapping("/board/delete/{no}")
-    public ResponseEntity<Void> deleteBoard(@PathVariable long no){
+    public ResponseEntity<Void> deleteBoard(@PathVariable int no){
         boardService.delete(no);
 
         return ResponseEntity.ok()
@@ -59,7 +59,7 @@ public class BoardController {
 
     // 게시글 수정
     @PutMapping("/board/update/{no}")
-    public ResponseEntity<Board> updateBoard(@PathVariable long no, @RequestBody UpdateBoardReqeust request){
+    public ResponseEntity<Board> updateBoard(@PathVariable int no, @RequestBody UpdateBoardReqeust request){
         Board board = boardService.update(no, request);
 
         return ResponseEntity.ok()

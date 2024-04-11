@@ -13,16 +13,17 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name="category")
 public class Category {
 
     // 카테고리 no
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_no")
-    private Long no;
+    private int no;
 
     // 카테고리 이름
-    @Column(nullable = false)
+    @Column(nullable = false, name="category_name")
     private String categoryName;
 
     @OneToMany(mappedBy = "category")

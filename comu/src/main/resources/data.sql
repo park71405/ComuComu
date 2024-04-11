@@ -1,1 +1,1 @@
-INSERT INTO role(role_id, role_name) VALUES ('root', '관리자권한');
+select * from role;

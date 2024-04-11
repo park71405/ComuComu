@@ -15,12 +15,14 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "board")
 public class Board {
 
     // 게시글 번호
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 1씩 자동 증가
-    private long no;
+    @Column(name="board_no")
+    private int no;
 
     // 제목
     @Column(name = "title", length = 20, nullable = false) // not null 길이 20
