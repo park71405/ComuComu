@@ -15,8 +15,9 @@ public class UserDetailService implements UserDetailsService {
     // 사용자 아이디로 사용자 정보 탐색
     @Override
     public User loadUserByUsername(String id){
+
         return userRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException((id)));
+                .orElseThrow(() -> new IllegalArgumentException("id를 찾지 못함... " + id));
     }
 
 }
