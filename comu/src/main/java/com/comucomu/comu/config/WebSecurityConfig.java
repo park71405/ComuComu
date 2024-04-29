@@ -36,7 +36,9 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/login", "/signup", "/user").permitAll()
+                        //.requestMatchers("/login", "/signup", "/user").permitAll()
+                        // 아직 로그인 관련 설정이 마무리되지 않아 security 기능 꺼둠
+                        .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form

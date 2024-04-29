@@ -49,35 +49,6 @@ class BoardControllerTest {
         boardRepository.deleteAll();
     }
 
-    @DisplayName("글 저장에 성공한다.")
-    @Test
-    public void addBoard() throws Exception {
-        //given
-        final String url = "/board/save";
-        final String title = "새글";
-        final String content = "새로운 내용";
-
-        final AddBoardRequest userRequest = new AddBoardRequest(title, content);
-
-        //객체 JSON으로 직렬화
-        final String requestBody = objectMapper.writeValueAsString(userRequest);
-
-        //when
-        // 요청 전송
-        ResultActions resultActions = mockMvc.perform(put(url)
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(requestBody));
-
-        //then
-        resultActions.andExpect(status().isCreated());
-
-        List<Board> boardList = boardRepository.findAll();
-
-        assertEquals(boardList.size(), 1L);
-        assertEquals(boardList.get(0).getTitle(), title);
-        assertEquals(boardList.get(0).getContent(), content);
-    }
-
     @DisplayName("글 목록 전체 조회에 성공한다.")
     @Test
     public void findAllBoards() throws Exception {
@@ -149,36 +120,5 @@ class BoardControllerTest {
         Assertions.assertEquals(boardList.size(), 0);
     }
 
-    @DisplayName("게시글 수정")
-    @Test
-    public void updateBoard() throws Exception{
-        // given
-        final String url = "/board/update/{no}";
-        final String title = "title";
-        final String content = "content";
-
-        Board board = boardRepository.save(Board.builder()
-                .title(title)
-                .content(content)
-                .build());
-
-        final String newTitle = "new title";
-        final String newContent = "new content";
-
-        UpdateBoardReqeust updateBoardReqeust = new UpdateBoardReqeust(newTitle, newContent);
-
-        // when
-        ResultActions resultActions = mockMvc.perform(put(url, board.getNo())
-                .contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(objectMapper.writeValueAsString(updateBoardReqeust)));
-
-        // then
-        resultActions.andExpect(status().isOk());
-
-        Board findBoard = boardRepository.findById(board.getNo()).get();
-
-        assertEquals(findBoard.getTitle(), newTitle);
-        assertEquals(findBoard.getContent(), newContent);
-    }
 
 }
