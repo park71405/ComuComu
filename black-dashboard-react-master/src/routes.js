@@ -15,6 +15,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
+import axios from "axios";
 import Board from "views/Board";
 import Dashboard from "views/Dashboard.js";
 import Icons from "views/Icons.js";
@@ -24,7 +25,60 @@ import TableList from "views/TableList.js";
 import Typography from "views/Typography.js";
 import UserProfile from "views/UserProfile.js";
 
-var routes = [
+function getCategory() {
+  axios({
+    method: "GET",
+    url: "http://localhost:8080/cate/searchAll",
+  }).then((res) => {
+    console.log(res.data);
+
+    res.data.map((response) => {
+      return routes.push({
+        path: "/" + response.no,
+        name: response.categoryName,
+        icon: "tim-icons  icon-bullet-list-67",
+        component: <Dashboard />,
+        layout: "/admin",
+      });
+    });
+  });
+}
+
+let routes = [
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    icon: "tim-icons icon-chart-pie-36",
+    component: <Dashboard />,
+    layout: "/admin",
+  },
+];
+
+let routes_old2 = [
+  {
+    path: "/dashboard",
+    name: "Dashboard",
+    icon: "tim-icons icon-chart-pie-36",
+    component: <Dashboard />,
+    layout: "/admin",
+  },
+  {
+    path: "/board",
+    name: "Home",
+    icon: "tim-icons  icon-bullet-list-67",
+    component: <Board />,
+    layout: "/admin",
+  },
+];
+
+var routes_old = [
+  {
+    path: "/board",
+    name: "Board",
+    icon: "tim-icons  icon-bullet-list-67",
+    component: <Board />,
+    layout: "/admin",
+  },
   {
     path: "/dashboard",
     name: "Dashboard",
@@ -72,13 +126,6 @@ var routes = [
     name: "Typography",
     icon: "tim-icons icon-align-center",
     component: <Typography />,
-    layout: "/admin",
-  },
-  {
-    path: "/board",
-    name: "Board",
-    icon: "tim-icons  icon-bullet-list-67",
-    component: <Board />,
     layout: "/admin",
   },
 ];

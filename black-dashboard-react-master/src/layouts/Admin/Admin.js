@@ -26,10 +26,13 @@ import Footer from "components/Footer/Footer.js";
 import Sidebar from "components/Sidebar/Sidebar.js";
 import FixedPlugin from "components/FixedPlugin/FixedPlugin.js";
 
-import routes from "routes.js";
+//import routes from "routes.js";
 
-import logo from "assets/img/react-logo.png";
+import logo from "assets/img/logo_comu.png";
 import { BackgroundColorContext } from "contexts/BackgroundColorContext";
+import axios from "axios";
+import Dashboard from "views/Dashboard";
+import Board from "views/Board";
 
 var ps;
 
@@ -39,6 +42,52 @@ function Admin(props) {
   const [sidebarOpened, setsidebarOpened] = React.useState(
     document.documentElement.className.indexOf("nav-open") !== -1
   );
+
+  const [routes, setRoutes] = React.useState([{}]);
+
+  React.useEffect(() => {
+    let tmpList = [
+      {
+        path: "/dashboard",
+        name: "Dashboard",
+        icon: "tim-icons icon-chart-pie-36",
+        component: <Dashboard />,
+        layout: "/admin",
+      },
+    ];
+
+    console.log(tmpList);
+
+    axios({
+      method: "GET",
+      url: "http://localhost:8080/cate/searchAll",
+    }).then((res) => {
+      console.log("res.data");
+      console.log(res.data);
+
+      res.data.map((response) => {
+        let tmpObject = {
+          path: response.path,
+          name: response.categoryName,
+          icon: response.icon,
+          component: null,
+          layout: "/admin",
+        };
+
+        // 나중에 게시판 종류 늘어나면 추가하면 됨.
+        if (response.component == "Board") {
+          tmpObject.component = <Board />;
+        }
+
+        console.log(tmpObject);
+
+        return tmpList.push(tmpObject);
+      });
+
+      setRoutes(tmpList);
+    });
+  }, []);
+
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
       document.documentElement.className += " perfect-scrollbar-on";
@@ -105,8 +154,8 @@ function Admin(props) {
             <Sidebar
               routes={routes}
               logo={{
-                outterLink: "https://www.creative-tim.com/",
-                text: "Creative Tim",
+                outterLink: "http://localhost:3000/admin/dashboard",
+                text: "Co.Mu.",
                 imgSrc: logo,
               }}
               toggleSidebar={toggleSidebar}

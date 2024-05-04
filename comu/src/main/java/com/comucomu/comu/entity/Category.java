@@ -22,9 +22,21 @@ public class Category {
     @Column(name = "category_no")
     private int no;
 
+    // 경로
+    @Column(nullable = false, name="path")
+    private String path;
+
     // 카테고리 이름
     @Column(nullable = false, name="category_name")
     private String categoryName;
+
+    // icon
+    @Column(nullable = false, name="icon")
+    private String icon;
+
+    // component
+    @Column(nullable = false, name="component")
+    private String component;
 
     @OneToMany(mappedBy = "category")
     private List<Board> boardList = new ArrayList<>();
