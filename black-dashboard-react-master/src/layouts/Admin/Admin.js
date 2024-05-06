@@ -86,7 +86,7 @@ function Admin(props) {
 
       setRoutes(tmpList);
     });
-  }, []);
+  }, [routes]);
 
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
