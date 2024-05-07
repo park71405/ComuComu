@@ -38,10 +38,10 @@ public class TokenProvider {
                 .setIssuer(jwtProperties.getIssuer())   // payload issuer : 발급자
                 .setIssuedAt(now)   // payload iat : 현재시간
                 .setExpiration(expiry)  // payload exp : expiry 멤버 변수값
-                .setSubject(user.getEmail())    // payload sub : user email
+                .setSubject(user.getNickname())    // payload sub : user nickname
                 .claim("id", user.getId())       // payload id : user id
                 // 서명 : secret_key와 같이 HS256 방식으로 암호와
-                .signWith(SignatureAlgorithm.ES256, jwtProperties.getSecretKey())
+                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
                 .compact();
     }
 
@@ -72,10 +72,10 @@ public class TokenProvider {
     }
 
     // 토큰 기반으로 user id get
-    public Long getUserId(String token){
+    public String getUserId(String token){
         Claims claims = getClaims(token);
 
-        return claims.get("id", Long.class);
+        return claims.get("id", String.class);
     }
 
     private Claims getClaims(String token){

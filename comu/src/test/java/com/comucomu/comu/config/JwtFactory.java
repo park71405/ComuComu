@@ -16,7 +16,7 @@ import java.util.Map;
 @Getter
 public class JwtFactory {
 
-    private String subject = "test@email.com";
+    private String subject = "유저1";
     private Date issuedAt = new Date();
     private Date expiration = new Date(new Date().getTime() + Duration.ofDays(14).toMillis());
     private Map<String, Object> claims = Collections.emptyMap();
@@ -43,7 +43,7 @@ public class JwtFactory {
                 .setIssuedAt(issuedAt)
                 .setExpiration(expiration)
                 .addClaims(claims)
-                .signWith(SignatureAlgorithm.ES256, jwtProperties.getSecretKey())
+                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
                 .compact();
     }
 
