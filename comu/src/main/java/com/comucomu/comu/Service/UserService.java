@@ -23,6 +23,10 @@ public class UserService {
                 .build()).getId();
     }
 
-
+    // 전달받은 유저 ID로 유저 검색
+    public User findById(String userId){
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
+    }
 
 }
