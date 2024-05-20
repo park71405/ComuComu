@@ -33,6 +33,7 @@ import { BackgroundColorContext } from "contexts/BackgroundColorContext";
 import axios from "axios";
 import Dashboard from "views/Dashboard";
 import Board from "views/Board";
+import Category from "views/Category";
 
 var ps;
 
@@ -61,32 +62,35 @@ function Admin(props) {
     axios({
       method: "GET",
       url: "http://localhost:8080/cate/searchAll",
-    }).then((res) => {
-      console.log("res.data");
-      console.log(res.data);
+    })
+      .then((res) => {
+        res.data.map((response) => {
+          let tmpObject = {
+            path: response.path,
+            name: response.categoryName,
+            icon: response.icon,
+            component: null,
+            layout: "/admin",
+          };
 
-      res.data.map((response) => {
-        let tmpObject = {
-          path: response.path,
-          name: response.categoryName,
-          icon: response.icon,
-          component: null,
-          layout: "/admin",
-        };
+          // 나중에 게시판 종류 늘어나면 추가하면 됨.
+          if (response.component == "Board") {
+            tmpObject.component = <Board />;
+          } else if (response.component == "Category") {
+            tmpObject.component = <Category />;
+          }
 
-        // 나중에 게시판 종류 늘어나면 추가하면 됨.
-        if (response.component == "Board") {
-          tmpObject.component = <Board />;
-        }
+          console.log(tmpObject);
 
-        console.log(tmpObject);
+          return tmpList.push(tmpObject);
+        });
 
-        return tmpList.push(tmpObject);
+        setRoutes(tmpList);
+      })
+      .catch(() => {
+        console.log("error");
       });
-
-      setRoutes(tmpList);
-    });
-  }, [routes]);
+  }, []);
 
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {

@@ -42,7 +42,7 @@ function Board() {
           <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">CATEGORY</CardTitle>
+                <CardTitle tag="h4">Free Board</CardTitle>
               </CardHeader>
               <Button variant="secondary" onClick={() => clickButton()}>
                 Category Add Click Me!
