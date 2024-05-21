@@ -2,6 +2,7 @@ package com.comucomu.comu.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
@@ -41,5 +42,13 @@ public class Category {
     @OneToMany(mappedBy = "category")
     private List<Board> boardList = new ArrayList<>();
 
-
+    @Builder
+    public Category(int no, String path, String categoryName, String icon, String component, List<Board> boardList) {
+        this.no = no;
+        this.path = path;
+        this.categoryName = categoryName;
+        this.icon = icon;
+        this.component = component;
+        this.boardList = boardList;
+    }
 }
