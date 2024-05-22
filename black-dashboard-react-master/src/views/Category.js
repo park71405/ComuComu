@@ -70,14 +70,20 @@ function Category() {
       axios({
         method: "POST",
         data: cateForm,
-        url: "http://localhost:8080/cate/addCategory",
+        url: "http://localhost:8080/cate",
       })
         .then((res) => {
           console.log(res);
-          alert("카테고리가 추가되었습니다.");
+          Swal.fire({
+            text: "카테고리가 추가되었습니다.",
+          });
         })
         .catch((res) => {
-          alert("카테고리 추가를 실패하였습니다.\n 잠시 후 다시 시도해주세요");
+          Swal.fire({
+            title: "카테고리 추가 실패",
+            text: "잠시 후 다시 시도해주세요",
+            icon: "error",
+          });
         })
         .finally(() => {
           // 모달창 닫고 cateForm 값 초기화
@@ -88,7 +94,13 @@ function Category() {
   };
 
   // 카테고리 삭제 비동기 함수
-  const deleteCategory = () => {
+  const deleteCategory = (e) => {
+    console.log(e.target);
+    console.log();
+
+    // 삭제할 카테고리의 no
+    let cateno = e.target.id;
+
     Swal.fire({
       title: "카테고리를 삭제하시겠습니까?",
       text: "해당 카테고리에 존재하는 게시글 또한 삭제됩니다.",
@@ -99,7 +111,29 @@ function Category() {
     }).then((res) => {
       if (res.isConfirmed) {
         //삭제 요청 처리
-        console.log("yews");
+
+        axios({
+          method: "DELETE",
+          params: {
+            no: cateno,
+          },
+          url: "http://localhost:8080/cate",
+        })
+          .then((res) => {
+            Swal.fire({
+              text: "카테고리가 삭제되었습니다.",
+            });
+          })
+          .catch((res) => {
+            Swal.fire({
+              title: "카테고리 삭제 실패",
+              text: "잠시 후 다시 시도해주세요",
+              icon: "error",
+            });
+          })
+          .finally(() => {
+            searchCategoryAll();
+          });
       } else {
       }
     });
@@ -122,6 +156,7 @@ function Category() {
             name: response.categoryName,
             icon: response.icon,
             path: response.path,
+            component: response.component,
           });
         });
 
@@ -130,6 +165,25 @@ function Category() {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  // 카테고리 수정 아이콘 클릭
+  const updateCategory = (e) => {
+    // 모달 창 띄우기
+    AddModalHandleShow();
+
+    // 클릭한 row의 no
+    const cateNo = e.target.id;
+
+    let updateCate = cateList.find((cate) => cate.no == cateNo);
+
+    // 클릭한 row의 카테고리 정보를 수정 form에 넣기
+    setCateForm({
+      categoryName: "123",
+      path: "123",
+      icon: "123",
+      component: "123",
+    });
   };
 
   useEffect(() => {
@@ -148,6 +202,7 @@ function Category() {
                 </Col>
                 <Col sm={9}>
                   <Input
+                    id="cateNameInput"
                     placeholder="ex) 카테고리"
                     style={{ color: "black" }}
                     name="categoryName"
@@ -161,6 +216,7 @@ function Category() {
                 </Col>
                 <Col sm={9}>
                   <Input
+                    id="catePathInput"
                     placeholder="ex) /category"
                     style={{ color: "black" }}
                     name="path"
@@ -174,6 +230,7 @@ function Category() {
                 </Col>
                 <Col sm={9}>
                   <Input
+                    id="cateIconInput"
                     placeholder="ex) 나중에 모달 하나 더 띄우고 선택하도록..."
                     style={{ color: "black" }}
                     name="icon"
@@ -187,6 +244,7 @@ function Category() {
                 </Col>
                 <Col sm={9}>
                   <Input
+                    id="cateComponentInput"
                     placeholder="ex) 나중에 모달 하나 더 띄우고 선택하도록..."
                     style={{ color: "black" }}
                     name="component"
@@ -227,6 +285,9 @@ function Category() {
                       <tr>
                         <th>No.</th>
                         <th>Category Name</th>
+                        <th>표기 url</th>
+                        <th>아이콘</th>
+                        <th>레이아웃</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -235,12 +296,22 @@ function Category() {
                           <tr key={cate.no}>
                             <td>{cate.no}</td>
                             <td>{cate.name}</td>
+                            <td>{cate.path}</td>
                             <td>
-                              <i className="tim-icons icon-settings"></i>
+                              <i className={cate.icon}></i>
+                            </td>
+                            <td>{cate.component}</td>
+                            <td>
+                              <i
+                                className="tim-icons icon-settings"
+                                id={cate.no}
+                                onClick={updateCategory}
+                              ></i>
                             </td>
                             <td>
                               <i
                                 className="tim-icons icon-trash-simple"
+                                id={cate.no}
                                 onClick={deleteCategory}
                               ></i>
                             </td>

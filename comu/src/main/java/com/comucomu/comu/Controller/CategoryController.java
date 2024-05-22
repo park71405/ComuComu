@@ -3,15 +3,13 @@ package com.comucomu.comu.Controller;
 import com.comucomu.comu.DTO.AddCategoryRequest;
 import com.comucomu.comu.DTO.BoardResponse;
 import com.comucomu.comu.DTO.CategoryResponse;
+import com.comucomu.comu.DTO.UpdateCategoryRequest;
 import com.comucomu.comu.Service.CategoryService;
 import com.comucomu.comu.entity.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,12 +32,25 @@ public class CategoryController {
     }
 
     // 카테고리 추가
-    @PostMapping("/cate/addCategory")
+    @PostMapping("/cate")
     public int AddCategory(@RequestBody AddCategoryRequest addCategoryRequest) {
 
         int categoryNo = categoryService.addCategory(addCategoryRequest);
 
         return categoryNo;
+    }
+
+    // 카테고리 삭제
+    @DeleteMapping("/cate")
+    public void DeleteCategory(@RequestParam("no") String category_no){
+
+        categoryService.deleteCategory(Integer.parseInt(category_no));
+    }
+
+    // 카테고리 수정
+    @PutMapping("/cate")
+    public void UpdateCategory(@RequestBody UpdateCategoryRequest updateCategoryRequest){
+        categoryService.updateCategory(updateCategoryRequest);
     }
 
 }
