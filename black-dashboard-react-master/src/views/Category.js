@@ -12,7 +12,6 @@ import {
   Modal,
   ModalBody,
   ModalFooter,
-  ModalHeader,
   Row,
   Table,
 } from "reactstrap";
@@ -28,6 +27,7 @@ function Category() {
   // 카테고리 창닫기 버튼 클릭 시 cateForm 값 초기화
   const resetCateForm = () => {
     setCateForm({
+      id: "",
       categoryName: "",
       path: "",
       icon: "",
@@ -51,7 +51,7 @@ function Category() {
     });
   };
 
-  // 카테고리 추가 비동기 작업
+  // 카테고리 모달창 save 버튼 클릭 이벤트
   const addCategory = () => {
     // 카테고리 추가 모달창 닫기
     AddModalHandleClose();
@@ -67,31 +67,73 @@ function Category() {
     } else if (cateForm.path == "") {
       alert("경로를 입력해주세요");
     } else {
-      axios({
-        method: "POST",
-        data: cateForm,
-        url: "http://localhost:8080/cate",
-      })
-        .then((res) => {
-          console.log(res);
-          Swal.fire({
-            text: "카테고리가 추가되었습니다.",
-          });
-        })
-        .catch((res) => {
-          Swal.fire({
-            title: "카테고리 추가 실패",
-            text: "잠시 후 다시 시도해주세요",
-            icon: "error",
-          });
-        })
-        .finally(() => {
-          // 모달창 닫고 cateForm 값 초기화
-          resetCateForm();
-          searchCategoryAll();
-        });
+
+      if(cateForm.id === ""){ // 카테고리 추가 비동기 함수 실행
+        addCateForm();
+      }else{                  // 카테고리 수정 비동기 함수 실행
+        updateCateForm();
+      }
+
+      
     }
   };
+
+  //카테고리 추가 비동기 함수
+  const addCateForm = () => {
+    axios({
+      method: "POST",
+      data: cateForm,
+      url: "http://localhost:8080/cate",
+    })
+      .then((res) => {
+        console.log(res);
+        Swal.fire({
+          text: "카테고리가 추가되었습니다.",
+        });
+      })
+      .catch((res) => {
+        Swal.fire({
+          title: "카테고리 추가 실패",
+          text: "잠시 후 다시 시도해주세요",
+          icon: "error",
+        });
+      })
+      .finally(() => {
+        // 모달창 닫고 cateForm 값 초기화
+        resetCateForm();
+        searchCategoryAll();
+      });
+  }
+
+  // 카테고리 수정 비동기 함수
+  const updateCateForm = () => {
+
+    let tmpCate = {no: cateForm.id, categoryName: cateForm.categoryName, path: cateForm.path, icon: cateForm.icon, component: cateForm.component}
+
+    axios({
+      method: "PUT",
+      data: tmpCate,
+      url: "http://localhost:8080/cate",
+    })
+    .then((res) => {
+      console.log(res);
+      Swal.fire({
+        text: "카테고리가 수정되었습니다.",
+      });
+    })
+    .catch((res) => {
+      Swal.fire({
+        title: "카테고리 수정 실패",
+        text: "잠시 후 다시 시도해주세요",
+        icon: "error",
+      });
+    })
+    .finally(() => {
+      // 모달창 닫고 cateForm 값 초기화
+      resetCateForm();
+      searchCategoryAll();
+    });
+  }
 
   // 카테고리 삭제 비동기 함수
   const deleteCategory = (e) => {
@@ -172,18 +214,19 @@ function Category() {
     // 모달 창 띄우기
     AddModalHandleShow();
 
-    // 클릭한 row의 no
+    // 클릭한 row의 정보
     const cateNo = e.target.id;
-
     let updateCate = cateList.find((cate) => cate.no == cateNo);
 
+    let tmpCate = {id: cateNo,
+                    categoryName: updateCate.name,
+                    path: updateCate.path,
+                    icon: updateCate.icon,
+                    component: updateCate.component,};
+
     // 클릭한 row의 카테고리 정보를 수정 form에 넣기
-    setCateForm({
-      categoryName: "123",
-      path: "123",
-      icon: "123",
-      component: "123",
-    });
+    setCateForm(tmpCate);
+
   };
 
   useEffect(() => {
@@ -204,6 +247,7 @@ function Category() {
                   <Input
                     id="cateNameInput"
                     placeholder="ex) 카테고리"
+                    defaultValue={cateForm.categoryName}
                     style={{ color: "black" }}
                     name="categoryName"
                     onChange={onChangeCateForm}
@@ -218,6 +262,7 @@ function Category() {
                   <Input
                     id="catePathInput"
                     placeholder="ex) /category"
+                    defaultValue={cateForm.path}
                     style={{ color: "black" }}
                     name="path"
                     onChange={onChangeCateForm}
@@ -232,6 +277,7 @@ function Category() {
                   <Input
                     id="cateIconInput"
                     placeholder="ex) 나중에 모달 하나 더 띄우고 선택하도록..."
+                    defaultValue={cateForm.icon}
                     style={{ color: "black" }}
                     name="icon"
                     onChange={onChangeCateForm}
@@ -246,6 +292,7 @@ function Category() {
                   <Input
                     id="cateComponentInput"
                     placeholder="ex) 나중에 모달 하나 더 띄우고 선택하도록..."
+                    defaultValue={cateForm.component}
                     style={{ color: "black" }}
                     name="component"
                     onChange={onChangeCateForm}

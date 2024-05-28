@@ -4,10 +4,12 @@ import com.comucomu.comu.DTO.AddCategoryRequest;
 import com.comucomu.comu.DTO.UpdateCategoryRequest;
 import com.comucomu.comu.Repository.CategoryRepository;
 import com.comucomu.comu.entity.Category;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -30,10 +32,23 @@ public class CategoryService {
         categoryRepository.deleteById(category_no);
     }
 
-    // 카테고리 수정
+    // 카테고리
+    @Transactional
     public void updateCategory(UpdateCategoryRequest request){
 
-        categoryRepository.updateCategory(request.getCategoryName(), request.getPath(), request.getIcon(), request.getComponent(), request.getNo());
+        // DB에서 id값 기준 데이터 찾기 (영속화)
+        Category category  = categoryRepository.findById(request.getNo()).orElseThrow(() -> {
+            throw new IllegalArgumentException("해당 id 부재 id no : " + request.getNo());
+        });
+
+        // 해당 값이 존재하는 경우 update 진행
+        category.setCategoryName(request.getCategoryName());
+        category.setPath(request.getPath());
+        category.setIcon(request.getIcon());
+        category.setComponent(request.getComponent());
+
+        categoryRepository.save(category);
+
 
     }
 

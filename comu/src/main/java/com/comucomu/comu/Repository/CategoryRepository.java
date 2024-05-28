@@ -8,14 +8,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface CategoryRepository extends JpaRepository<Category, Integer> {
 
-    @Modifying(clearAutomatically = true)
-    @Query(value="UPDATE CATEGORY c " +
-            "set c.category_name = :categoryName," +
-                "c.path = :path," +
-                "c.icon = :icon," +
-                "c.component = :component" +
-            "WHERE category_no = :no" , nativeQuery=true)
-    void updateCategory(String categoryName, String path, String icon, String component, int no);
 
 
 }
