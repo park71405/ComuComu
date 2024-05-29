@@ -34,6 +34,7 @@ import axios from "axios";
 import Dashboard from "views/Dashboard";
 import Board from "views/Board";
 import Category from "views/Category";
+import Login from "views/Login";
 
 var ps;
 
@@ -175,6 +176,10 @@ function Admin(props) {
                 <Route
                   path="/"
                   element={<Navigate to="/admin/dashboard" replace />}
+                />
+                <Route
+                  path="/login"
+                  element={<Login />}
                 />
               </Routes>
               {

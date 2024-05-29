@@ -38,6 +38,7 @@ import {
   NavbarToggler,
   ModalHeader,
 } from "reactstrap";
+import { Link, Navigate, Route } from "react-router-dom";
 
 function AdminNavbar(props) {
   const [collapseOpen, setcollapseOpen] = React.useState(false);
@@ -103,6 +104,13 @@ function AdminNavbar(props) {
                   <i className="tim-icons icon-zoom-split" />
                   <span className="d-lg-none d-md-block">Search</span>
                 </Button>
+                <Link 
+                  to="/admin/login"
+                  className="mt-2 ml-3 pt-1"
+                >
+                  <i className="tim-icons icon-single-02" />
+                    <span className="d-lg-none d-md-block">Login</span>
+                </Link>
               </InputGroup>
               <UncontrolledDropdown nav>
                 <DropdownToggle
@@ -110,6 +118,7 @@ function AdminNavbar(props) {
                   color="default"
                   data-toggle="dropdown"
                   nav
+                  className="mt-1"
                 >
                   <div className="notification d-none d-lg-block d-xl-block" />
                   <i className="tim-icons icon-sound-wave" />
