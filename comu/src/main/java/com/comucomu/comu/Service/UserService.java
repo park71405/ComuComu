@@ -14,6 +14,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
+    // 전달받은 유저 정보로 유저 생성
     public String save(AddUserRequest addUserRequest){
         return userRepository.save(User.builder()
                 .id(addUserRequest.getId())
@@ -28,5 +29,7 @@ public class UserService {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("Unexpected user"));
     }
+
+
 
 }

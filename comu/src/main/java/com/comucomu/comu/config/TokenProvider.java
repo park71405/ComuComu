@@ -5,6 +5,8 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.InvalidKeyException;
+import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties.Authentication;
@@ -12,6 +14,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.time.Duration;
 import java.util.Collections;
 import java.util.Date;
@@ -30,8 +34,10 @@ public class TokenProvider {
     }
 
     // JWT 토큰 생성
-    private String makeToken(Date expiry, User user){
+    private String makeToken(Date expiry, User user) throws InvalidKeyException {
         Date now = new Date();
+
+        Key key = Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes(StandardCharsets.UTF_8));
 
         return Jwts.builder()
                 .setHeaderParam(Header.TYPE, Header.JWT_TYPE) // header type : JWT
@@ -41,15 +47,18 @@ public class TokenProvider {
                 .setSubject(user.getNickname())    // payload sub : user nickname
                 .claim("id", user.getId())       // payload id : user id
                 // 서명 : secret_key와 같이 HS256 방식으로 암호와
-                .signWith(SignatureAlgorithm.HS256, jwtProperties.getSecretKey())
+                .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     // JWT 토큰 유효성 검증 메서드
     public boolean validToken(String token){
+
+        Key key = Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes(StandardCharsets.UTF_8));
+
         try{
             Jwts.parserBuilder()
-                    .setSigningKey(jwtProperties.getSecretKey())    // secret_key 로 복호화
+                    .setSigningKey(key)    // secret_key 로 복호화
                     .build()
                     .parseClaimsJws(token);
 
@@ -79,8 +88,10 @@ public class TokenProvider {
     }
 
     private Claims getClaims(String token){
+        Key key = Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes(StandardCharsets.UTF_8));
+
         return Jwts.parserBuilder()
-                .setSigningKey(jwtProperties.getSecretKey())
+                .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();

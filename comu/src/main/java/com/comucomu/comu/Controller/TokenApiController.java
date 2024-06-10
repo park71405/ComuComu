@@ -20,6 +20,7 @@ public class TokenApiController {
     public ResponseEntity<CreateAccessTokenResponse> createNewAccessToken
             (@RequestBody CreateAccessTokenRequest request){
 
+        // 리프레시 토큰을 받아 새로운 액세스 토큰을 전달
         String newAccessToken = tokenService.createNewAccessToken(request.getRefreshToken());
 
         return ResponseEntity.status(HttpStatus.CREATED)

@@ -6,6 +6,7 @@ import com.comucomu.comu.Service.UserService;
 import com.comucomu.comu.entity.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.lang.Assert;
+import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.nio.charset.StandardCharsets;
+import java.security.Key;
 import java.time.Duration;
 import java.util.Date;
 import java.util.List;
@@ -27,7 +30,7 @@ public class TokenProviderTest {
     private TokenProvider tokenProvider;
 
     @Autowired
-    private UserDetailService userDetailService;
+    private UserService userService;
 
     @Autowired
     private JwtProperties jwtProperties;
@@ -36,14 +39,16 @@ public class TokenProviderTest {
     @Test
     void generateToken(){
         // given
-        User testUser = userDetailService.loadUserByUsername("user1");
+        User testUser = userService.findById("user1");
 
         // when
         String token = tokenProvider.generateToken(testUser, Duration.ofDays(14));
 
         // then
+        Key key = Keys.hmacShaKeyFor(jwtProperties.getSecretKey().getBytes(StandardCharsets.UTF_8));
+
         String userId = Jwts.parserBuilder()
-                .setSigningKey(jwtProperties.getSecretKey())
+                .setSigningKey(key)
                 .build()
                 .parseClaimsJws(token)
                 .getBody()
@@ -65,7 +70,7 @@ public class TokenProviderTest {
         boolean result = tokenProvider.validToken(token);
 
         // then
-        Assertions.assertEquals(result, false);
+        Assertions.assertFalse(result);
     }
 
     @DisplayName("getAuthentication 토큰으로 인증 정보 획득")
