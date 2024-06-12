@@ -11,6 +11,7 @@ import {
   Row,
   Table,
 } from "reactstrap";
+import Swal from "sweetalert2";
 
 function Login() {
 
@@ -19,11 +20,29 @@ function Login() {
   const clickLogin = () => {
     console.log("hahaha");
 
-    let id = document.getElementById("id").value;
+    let idData = document.getElementById("id").value;
     let pw = document.getElementById("pw").value;
 
-    console.log("id : " + id);
-    console.log("pw : " + pw);
+    let reqData = {id: idData, password: pw}
+
+    axios({
+      method: "POST",
+      data: reqData,
+      url: "login",
+    }).then((res) => {
+
+      let token = res.data;
+      //axios 요청 마다 헤더에 accessToekn 담도록 설정
+      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+
+    }).catch((err)=>{
+      console.log(err);
+      Swal.fire({
+        title: "로그인 실패",
+        text: "다시 시도해주세요",
+        icon: "error",
+      });
+    })
 
   }
 

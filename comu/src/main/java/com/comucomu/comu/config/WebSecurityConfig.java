@@ -11,6 +11,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -41,14 +42,13 @@ public class WebSecurityConfig {
                         .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                .formLogin(form -> form
+                /*.formLogin(form -> form
                         .loginPage("/login")
                         .defaultSuccessUrl("/boards"))
                 .logout(logout -> logout
                         .logoutSuccessUrl("/login")
-                        .invalidateHttpSession(true))
-                .csrf(csrf -> csrf
-                        .disable())
+                        .invalidateHttpSession(true))*/
+                .csrf(AbstractHttpConfigurer::disable)
                 .build();
 
     }
