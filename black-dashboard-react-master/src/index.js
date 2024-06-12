@@ -18,6 +18,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import axios from "axios";
 
 import AdminLayout from "layouts/Admin/Admin.js";
 
@@ -30,6 +31,7 @@ import ThemeContextWrapper from "./components/ThemeWrapper/ThemeWrapper";
 import BackgroundColorWrapper from "./components/BackgroundColorWrapper/BackgroundColorWrapper";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+axios.defaults.baseURL = "http://localhost:8080/";
 
 root.render(
   <ThemeContextWrapper>
