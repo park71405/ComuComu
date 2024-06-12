@@ -17,7 +17,7 @@ function Board() {
   const clickButton = () => {
     axios({
       method: "GET",
-      url: "http://localhost:8080/cate/searchAll",
+      url: "cate/searchAll",
     })
       .then((res) => {
         console.log(res.data);

@@ -83,7 +83,7 @@ function Category() {
     axios({
       method: "POST",
       data: cateForm,
-      url: "http://localhost:8080/cate",
+      url: "cate",
     })
       .then((res) => {
         console.log(res);
@@ -113,7 +113,7 @@ function Category() {
     axios({
       method: "PUT",
       data: tmpCate,
-      url: "http://localhost:8080/cate",
+      url: "cate",
     })
     .then((res) => {
       console.log(res);
@@ -159,7 +159,7 @@ function Category() {
           params: {
             no: cateno,
           },
-          url: "http://localhost:8080/cate",
+          url: "cate",
         })
           .then((res) => {
             Swal.fire({
@@ -185,7 +185,7 @@ function Category() {
   const searchCategoryAll = () => {
     axios({
       method: "GET",
-      url: "http://localhost:8080/cate/searchAll",
+      url: "cate/searchAll",
     })
       .then((res) => {
         console.log(res.data);

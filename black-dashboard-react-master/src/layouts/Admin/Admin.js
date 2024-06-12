@@ -62,7 +62,7 @@ function Admin(props) {
 
     axios({
       method: "GET",
-      url: "http://localhost:8080/cate/searchAll",
+      url: "cate/searchAll",
     })
       .then((res) => {
         res.data.map((response) => {
