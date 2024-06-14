@@ -35,6 +35,7 @@ function Login() {
       //axios 요청 마다 헤더에 accessToekn 담도록 설정
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
+
     }).catch((err)=>{
       console.log(err);
       Swal.fire({

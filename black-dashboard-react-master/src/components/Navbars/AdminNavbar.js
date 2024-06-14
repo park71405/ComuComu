@@ -39,6 +39,8 @@ import {
   ModalHeader,
 } from "reactstrap";
 import { Link, Navigate, Route } from "react-router-dom";
+import Swal from "sweetalert2";
+import axios from "axios";
 
 function AdminNavbar(props) {
   const [collapseOpen, setcollapseOpen] = React.useState(false);
@@ -72,6 +74,17 @@ function AdminNavbar(props) {
   const toggleModalSearch = () => {
     setmodalSearch(!modalSearch);
   };
+
+  //로그아웃 버튼 클릭 시 이벤트
+  const clickLogOut = () => {
+    Swal.fire({
+      title: "로그아웃",
+      icon: "info"
+    });
+
+    axios.defaults.headers.common['Authorization'] = "";
+  }
+
   return (
     <>
       <Navbar className={classNames("navbar-absolute", color)} expand="lg">
@@ -174,7 +187,7 @@ function AdminNavbar(props) {
                   </NavLink>
                   <DropdownItem divider tag="li" />
                   <NavLink tag="li">
-                    <DropdownItem className="nav-item">Log out</DropdownItem>
+                    <DropdownItem className="nav-item" onClick={clickLogOut}>Log out</DropdownItem>
                   </NavLink>
                 </DropdownMenu>
               </UncontrolledDropdown>
