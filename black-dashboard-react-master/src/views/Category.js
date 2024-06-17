@@ -67,13 +67,13 @@ function Category() {
     } else if (cateForm.path == "") {
       alert("경로를 입력해주세요");
     } else {
-
+      
       if(cateForm.id === ""){ // 카테고리 추가 비동기 함수 실행
         addCateForm();
       }else{                  // 카테고리 수정 비동기 함수 실행
         updateCateForm();
       }
-
+      
       
     }
   };

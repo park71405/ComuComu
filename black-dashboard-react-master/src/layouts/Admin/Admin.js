@@ -35,6 +35,7 @@ import Dashboard from "views/Dashboard";
 import Board from "views/Board";
 import Category from "views/Category";
 import Login from "views/Login";
+import Chat from "views/Chat";
 
 var ps;
 
@@ -79,6 +80,8 @@ function Admin(props) {
             tmpObject.component = <Board />;
           } else if (response.component == "Category") {
             tmpObject.component = <Category />;
+          } else if (response.component == "Chat"){
+            tmpObject.component = <Chat />;
           }
 
           console.log(tmpObject);

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Button,
   Card,
@@ -15,6 +16,7 @@ import Swal from "sweetalert2";
 
 function Login() {
 
+  const navigate = useNavigate();
 
   // 로그인 버튼 클릭 이벤트
   const clickLogin = () => {
@@ -35,6 +37,8 @@ function Login() {
       //axios 요청 마다 헤더에 accessToekn 담도록 설정
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
+      // 메인페이지로 이동
+      navigate("/admin/dashboard")
 
     }).catch((err)=>{
       console.log(err);
