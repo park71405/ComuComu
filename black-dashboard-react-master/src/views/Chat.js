@@ -1,4 +1,5 @@
 import { backgroundColors } from "contexts/BackgroundColorContext";
+import { useState } from "react";
 
 const {
   Row,
@@ -14,6 +15,16 @@ const {
 } = require("reactstrap");
 
 function Chat() {
+  const [message, setMessage] = useState([]);
+
+  const clickSendChatBtn = () => {
+    let userInputChat = document.getElementById("inputChat").value;
+
+    setMessage([...message, userInputChat]);
+
+    document.getElementById("inputChat").value = '';
+  };
+
   return (
     <>
       <div className="content">
@@ -27,7 +38,7 @@ function Chat() {
                     placeholder="SEARCH"
                     type="text"
                     className="mb-5 mt-4"
-                    style={{ backgroundColor: "white" }}
+                    style={{ backgroundColor: "white", color: "black" }}
                   />
                 </CardHeader>
                 <CardBody>
@@ -36,7 +47,6 @@ function Chat() {
                       <tr>
                         <td>haha</td>
                       </tr>
-                      
                     </tbody>
                   </Table>
                 </CardBody>
@@ -50,32 +60,37 @@ function Chat() {
                   <CardTitle tag="h4">Chat Name</CardTitle>
                 </CardHeader>
                 <CardBody className="d-flex align-items-end">
-                  <Table className="tablesorter text-center mb-5 mt-3 ">
+                  <Table
+                    id="chatList"
+                    className="tablesorter text-center mb-5 mt-3 "
+                  >
                     <tbody>
-                      <tr>
-                        <td>haha</td>
-                      </tr>
-                      <tr>
-                        <td>haha2</td>
-                      </tr>
+                      {message.map((message, index) => {
+                        return (
+                          <tr key={index}>
+                            <td>{message}</td>
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </Table>
                 </CardBody>
                 <Row className="mb-2 mx-2">
-                    <Col xs={9} className="mt-1">
-                      <Input
-                        placeholder="SEARCH"
-                        type="text"
-                        className=""
-                        style={{ backgroundColor: "white" }}
-                      />
-                    </Col>
-                    <Col xs={3} className="">
-                      <Button className="">
-                        <i className="tim-icons icon-send" />
-                      </Button>
-                    </Col>
-                  </Row>
+                  <Col xs={9} className="mt-1">
+                    <Input
+                      placeholder="SEARCH"
+                      type="text"
+                      className=""
+                      id="inputChat"
+                      style={{ backgroundColor: "white", color: "black" }}
+                    />
+                  </Col>
+                  <Col xs={3} className="">
+                    <Button className="" onClick={clickSendChatBtn}>
+                      <i className="tim-icons icon-send" />
+                    </Button>
+                  </Col>
+                </Row>
               </Card>
             </div>
           </Col>
