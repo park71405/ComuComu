@@ -20,7 +20,9 @@ function Chat() {
   const clickSendChatBtn = () => {
     let userInputChat = document.getElementById("inputChat").value;
 
-    setMessage([...message, userInputChat]);
+    let addmsg = {msg: userInputChat, type: "my"};
+
+    setMessage(msg => [...msg, addmsg]);
 
     document.getElementById("inputChat").value = '';
   };
@@ -59,24 +61,37 @@ function Chat() {
                 <CardHeader>
                   <CardTitle tag="h4">Chat Name</CardTitle>
                 </CardHeader>
-                <CardBody className="d-flex align-items-end">
+                <CardBody className="pl-3 d-flex align-items-end">
                   <Table
                     id="chatList"
                     className="tablesorter text-center mb-5 mt-3 "
                   >
                     <tbody>
                       {message.map((message, index) => {
-                        return (
-                          <tr key={index}>
-                            <td>{message}</td>
-                          </tr>
-                        );
+                        if(message.type == "my"){
+                          return (
+                            <tr key={index}>
+                              <td className="text-right px-4">
+                                {message.msg}
+                              </td>
+                            </tr>
+                          );
+                        }else{
+                          return (
+                            <tr key={index}>
+                              <td className="text-left px-4">
+                                {message.msg}
+                              </td>
+                            </tr>
+                          );
+                        }
+                        
                       })}
                     </tbody>
                   </Table>
                 </CardBody>
                 <Row className="mb-2 mx-2">
-                  <Col xs={9} className="mt-1">
+                  <Col xs={9} className="pl-5 mt-1">
                     <Input
                       placeholder="SEARCH"
                       type="text"
