@@ -11,6 +11,7 @@
     "chart.js": "3.9.1",
     "classnames": "2.3.2",
     "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
     "express": "^4.19.2",
     "http": "^0.0.1-security",
     "http-proxy-middleware": "^3.0.0",
@@ -24,6 +25,7 @@
     "react-scripts": "5.0.1",
     "sass": "1.62.1",
     "socket.io": "^4.7.5",
+    "socket.io-client": "^4.7.5",
     "sweetalert2": "^11.11.0",
     "ws": "^8.17.1"
   },

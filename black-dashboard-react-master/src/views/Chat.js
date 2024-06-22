@@ -1,5 +1,6 @@
 import { backgroundColors } from "contexts/BackgroundColorContext";
 import { useState } from "react";
+import {io} from 'socket.io-client';
 
 const {
   Row,
@@ -15,6 +16,9 @@ const {
 } = require("reactstrap");
 
 function Chat() {
+
+  const socket = io.connect("http://localhost:3030");
+
   const [message, setMessage] = useState([]);
 
   const clickSendChatBtn = () => {
@@ -25,6 +29,8 @@ function Chat() {
     setMessage(msg => [...msg, addmsg]);
 
     document.getElementById("inputChat").value = '';
+
+    socket.emit("chat", addmsg);
   };
 
   return (
