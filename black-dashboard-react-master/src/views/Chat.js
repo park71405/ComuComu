@@ -1,7 +1,9 @@
 import { backgroundColors } from "contexts/BackgroundColorContext";
 import { useEffect, useState } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 import { socket } from "socket";
 import {io} from 'socket.io-client';
+import Swal from "sweetalert2";
 
 const {
   Row,
@@ -16,7 +18,9 @@ const {
   CardFooter,
 } = require("reactstrap");
 
-function Chat() {
+function Chat(props) {
+
+  const navigate = useNavigate();
 
   const [message, setMessage] = useState([]);
 
@@ -39,7 +43,20 @@ function Chat() {
 
   useEffect(() => {
 
-    socket.connect();
+    if(props.isLogin === true){
+      socket.connect();
+    }else{
+
+      Swal.fire({
+        title: '로그인이 필요한 페이지 입니다.',
+        text: '로그인 페이지로 이동하겠습니다.',
+        icon: "warning"
+      })
+
+      // 로그인 페이지로 이동
+      navigate("/admin/login");
+    }
+    
 
     socket.on('connect', () =>{
       setIsConnected(true);

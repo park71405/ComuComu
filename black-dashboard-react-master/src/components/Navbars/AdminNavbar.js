@@ -79,11 +79,13 @@ function AdminNavbar(props) {
   const clickLogOut = () => {
     Swal.fire({
       title: "로그아웃",
-      icon: "info"
+      icon: "info",
     });
 
-    axios.defaults.headers.common['Authorization'] = "";
-  }
+    axios.defaults.headers.common["Authorization"] = "";
+
+    props.loginHandler(false);
+  };
 
   return (
     <>
@@ -117,13 +119,12 @@ function AdminNavbar(props) {
                   <i className="tim-icons icon-zoom-split" />
                   <span className="d-lg-none d-md-block">Search</span>
                 </Button>
-                <Link 
-                  to="/admin/login"
-                  className="mt-2 ml-3 pt-1"
-                >
-                  <i className="tim-icons icon-single-02" />
+                {props.isLogin === true ? null : (
+                  <Link to="/admin/login" className="mt-2 ml-3 pt-1">
+                    <i className="tim-icons icon-single-02" />
                     <span className="d-lg-none d-md-block">Login</span>
-                </Link>
+                  </Link>
+                )}
               </InputGroup>
               <UncontrolledDropdown nav>
                 <DropdownToggle
@@ -187,7 +188,9 @@ function AdminNavbar(props) {
                   </NavLink>
                   <DropdownItem divider tag="li" />
                   <NavLink tag="li">
-                    <DropdownItem className="nav-item" onClick={clickLogOut}>Log out</DropdownItem>
+                    <DropdownItem className="nav-item" onClick={clickLogOut}>
+                      Log out
+                    </DropdownItem>
                   </NavLink>
                 </DropdownMenu>
               </UncontrolledDropdown>

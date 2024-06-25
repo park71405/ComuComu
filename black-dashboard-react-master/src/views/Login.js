@@ -14,13 +14,12 @@ import {
 } from "reactstrap";
 import Swal from "sweetalert2";
 
-function Login() {
+function Login(props) {
 
   const navigate = useNavigate();
 
   // 로그인 버튼 클릭 이벤트
   const clickLogin = () => {
-    console.log("hahaha");
 
     let idData = document.getElementById("id").value;
     let pw = document.getElementById("pw").value;
@@ -38,7 +37,9 @@ function Login() {
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
 
       // 메인페이지로 이동
-      navigate("/admin/dashboard")
+      navigate("/admin/dashboard");
+
+      props.loginHandler(true);
 
     }).catch((err)=>{
       console.log(err);

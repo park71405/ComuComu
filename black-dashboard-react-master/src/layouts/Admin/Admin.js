@@ -46,6 +46,17 @@ function Admin(props) {
     document.documentElement.className.indexOf("nav-open") !== -1
   );
 
+  // 로그인 상태 관리 start
+  const [isLogin, setIsLogin] = useState(false);
+
+  const loginHandler = (res) => {
+    setIsLogin(res);
+  }
+
+  // 로그인 상태 관리 end
+
+
+  // 카테고리 상태 관리 start
   const [routes, setRoutes] = React.useState([{}]);
 
   React.useEffect(() => {
@@ -58,8 +69,6 @@ function Admin(props) {
         layout: "/admin",
       },
     ];
-
-    console.log(tmpList);
 
     axios({
       method: "GET",
@@ -81,10 +90,8 @@ function Admin(props) {
           } else if (response.component == "Category") {
             tmpObject.component = <Category />;
           } else if (response.component == "Chat"){
-            tmpObject.component = <Chat />;
+            tmpObject.component = <Chat isLogin={isLogin} />;
           }
-
-          console.log(tmpObject);
 
           return tmpList.push(tmpObject);
         });
@@ -95,6 +102,8 @@ function Admin(props) {
         console.log("error");
       });
   }, []);
+
+  // 카테고리 상태 관리 end
 
   React.useEffect(() => {
     if (navigator.platform.indexOf("Win") > -1) {
@@ -173,6 +182,8 @@ function Admin(props) {
                 brandText={getBrandText(location.pathname)}
                 toggleSidebar={toggleSidebar}
                 sidebarOpened={sidebarOpened}
+                isLogin={isLogin}
+                loginHandler={loginHandler}
               />
               <Routes>
                 {getRoutes(routes)}
@@ -182,7 +193,7 @@ function Admin(props) {
                 />
                 <Route
                   path="/login"
-                  element={<Login />}
+                  element={<Login loginHandler={loginHandler} />}
                 />
               </Routes>
               {
