@@ -1,5 +1,6 @@
 import { backgroundColors } from "contexts/BackgroundColorContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { socket } from "socket";
 import {io} from 'socket.io-client';
 
 const {
@@ -17,8 +18,6 @@ const {
 
 function Chat() {
 
-  const socket = io.connect("http://localhost:3030");
-
   const [message, setMessage] = useState([]);
 
   const clickSendChatBtn = () => {
@@ -30,8 +29,40 @@ function Chat() {
 
     document.getElementById("inputChat").value = '';
 
-    socket.emit("chat", addmsg);
+    socket.emit('chat', addmsg);
+    
   };
+
+  // 채팅 로직 start
+  const [isConnected, setIsConnected] = useState(socket.connected);
+  const [fooEvents, setFooEvents] = useState([]);
+
+  useEffect(() => {
+
+    socket.connect();
+
+    socket.on('connect', () =>{
+      setIsConnected(true);
+    });
+    socket.on('disconnect', () => {
+      setIsConnected(false);
+    });
+    socket.on('sendChat', (data) => {
+      console.log("채팅 도착");
+      console.log(data);
+    })
+
+    return () => {
+      socket.off('connect', () =>{
+        setIsConnected(true);
+      });
+      socket.off('disconnect', () => {
+        setIsConnected(false);
+      });
+    };
+  }, []);
+ 
+  // 채팅 로직 end
 
   return (
     <>

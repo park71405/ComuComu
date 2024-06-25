@@ -25,6 +25,8 @@ io.on('connection', (socket)=>{
 
         console.log(data);
 
+        socket.emit('sendChat', data);
+
     });
 
     socket.on('forceDisconnect', () => {
