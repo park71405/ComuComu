@@ -36,6 +36,7 @@ import Board from "views/Board";
 import Category from "views/Category";
 import Login from "views/Login";
 import Chat from "views/Chat";
+import Join from "views/Join";
 
 var ps;
 
@@ -48,9 +49,14 @@ function Admin(props) {
 
   // 로그인 상태 관리 start
   const [isLogin, setIsLogin] = useState(false);
+  const [userInfo, setUserInfo] = useState({});
 
   const loginHandler = (res) => {
     setIsLogin(res);
+  }
+
+  const loginUserInfoHandler = (res) => {
+    setUserInfo(res)
   }
 
   // 로그인 상태 관리 end
@@ -101,7 +107,7 @@ function Admin(props) {
       .catch(() => {
         console.log("error");
       });
-  }, []);
+  }, [isLogin]);
 
   // 카테고리 상태 관리 end
 
@@ -193,7 +199,11 @@ function Admin(props) {
                 />
                 <Route
                   path="/login"
-                  element={<Login loginHandler={loginHandler} />}
+                  element={<Login loginHandler={loginHandler} loginUserInfoHandler={loginUserInfoHandler} />}
+                />
+                <Route
+                  path="/join"
+                  element={<Join loginHandler={loginHandler} />}
                 />
               </Routes>
               {

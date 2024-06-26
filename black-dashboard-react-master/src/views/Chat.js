@@ -39,7 +39,6 @@ function Chat(props) {
 
   // 채팅 로직 start
   const [isConnected, setIsConnected] = useState(socket.connected);
-  const [fooEvents, setFooEvents] = useState([]);
 
   useEffect(() => {
 
@@ -47,11 +46,12 @@ function Chat(props) {
       socket.connect();
     }else{
 
+      
       Swal.fire({
-        title: '로그인이 필요한 페이지 입니다.',
+        title: '로그인이 필요한 페이지 입니다. ',
         text: '로그인 페이지로 이동하겠습니다.',
         icon: "warning"
-      })
+      });
 
       // 로그인 페이지로 이동
       navigate("/admin/login");
@@ -77,7 +77,7 @@ function Chat(props) {
         setIsConnected(false);
       });
     };
-  }, []);
+  }, [props.isLogin]);
  
   // 채팅 로직 end
 

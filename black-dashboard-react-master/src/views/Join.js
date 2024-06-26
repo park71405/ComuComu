@@ -14,39 +14,39 @@ import {
 } from "reactstrap";
 import Swal from "sweetalert2";
 
-function Login(props) {
+function Join(props) {
 
   const navigate = useNavigate();
 
   // 로그인 버튼 클릭 이벤트
-  const clickLogin = () => {
+  const clickJoin = () => {
 
     let idData = document.getElementById("id").value;
     let pw = document.getElementById("pw").value;
+    let nicknameData = document.getElementById("nickname").value;
+    let emailData = document.getElementById("email").value;
 
-    let reqData = {id: idData, password: pw}
+    let reqData = {id: idData, password: pw, nickname: nicknameData, email: emailData};
 
     axios({
       method: "POST",
       data: reqData,
-      url: "login",
+      url: "user",
     }).then((res) => {
 
-      let token = res.data;
-      //axios 요청 마다 헤더에 accessToekn 담도록 설정
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
+      Swal.fire({
+        title: '회원가입 성공',
+        text: '로그인 페이지로 이동하겠습니다.',
+        icon: "success"
+      });
 
-      // 메인페이지로 이동
-      navigate("/admin/dashboard");
-
-      props.loginHandler(true);
-
-      props.loginUserInfoHandler({id: reqData.id});
+      // 로그인 페이지로 이동
+      navigate("/admin/login");
 
     }).catch((err)=>{
       console.log(err);
       Swal.fire({
-        title: "로그인 실패",
+        title: "회원가입 실패",
         text: "다시 시도해주세요",
         icon: "error",
       });
@@ -78,9 +78,25 @@ function Login(props) {
                     <Input type="password" id="pw" placeholder="비밀번호를 입력해주세요"  />
                   </Col>
                 </Row>
+                <Row className="m-3 text-center">
+                  <Col md="3 mt-1">
+                    <h4>Name : </h4>
+                  </Col>
+                  <Col>
+                    <Input id="nickname" placeholder="Nickname를 입력해주세요" />
+                  </Col>
+                </Row>
+                <Row className="m-3 text-center">
+                  <Col md="3 mt-1">
+                    <h4>Email : </h4>
+                  </Col>
+                  <Col>
+                    <Input id="email" placeholder="Email를 입력해주세요" />
+                  </Col>
+                </Row>
                 <Row className="pt-5 justify-content-center">
-                  <Button  variant="primary" onClick={clickLogin}>
-                  Login
+                  <Button  variant="primary" onClick={clickJoin}>
+                  Join
                   </Button>
                 </Row>
               </CardBody>
@@ -92,4 +108,4 @@ function Login(props) {
   );
 }
 
-export default Login;
+export default Join;
