@@ -85,6 +85,7 @@ function AdminNavbar(props) {
     axios.defaults.headers.common["Authorization"] = "";
 
     props.loginHandler(false);
+    props.loginUserInfoHandler({});
   };
 
   return (

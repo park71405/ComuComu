@@ -190,6 +190,7 @@ function Admin(props) {
                 sidebarOpened={sidebarOpened}
                 isLogin={isLogin}
                 loginHandler={loginHandler}
+                loginUserInfoHandler={loginUserInfoHandler}
               />
               <Routes>
                 {getRoutes(routes)}
@@ -203,7 +204,7 @@ function Admin(props) {
                 />
                 <Route
                   path="/join"
-                  element={<Join loginHandler={loginHandler} />}
+                  element={<Join />}
                 />
               </Routes>
               {

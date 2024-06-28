@@ -14,7 +14,7 @@ import {
 } from "reactstrap";
 import Swal from "sweetalert2";
 
-function Join(props) {
+function Join() {
 
   const navigate = useNavigate();
 

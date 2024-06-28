@@ -39,7 +39,7 @@ public class User implements UserDetails {
     private String email;
 
     // 역할 id
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "role_id")
     @OnDelete(action = OnDeleteAction.SET_NULL)
     private Role role;

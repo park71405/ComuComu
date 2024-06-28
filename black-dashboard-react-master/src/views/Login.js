@@ -15,44 +15,49 @@ import {
 import Swal from "sweetalert2";
 
 function Login(props) {
-
   const navigate = useNavigate();
 
   // 로그인 버튼 클릭 이벤트
   const clickLogin = () => {
-
     let idData = document.getElementById("id").value;
     let pw = document.getElementById("pw").value;
 
-    let reqData = {id: idData, password: pw}
+    let reqData = { id: idData, password: pw };
 
     axios({
       method: "POST",
       data: reqData,
       url: "login",
-    }).then((res) => {
-
-      let token = res.data;
-      //axios 요청 마다 헤더에 accessToekn 담도록 설정
-      axios.defaults.headers.common['Authorization'] = 'Bearer ' + token;
-
-      // 메인페이지로 이동
-      navigate("/admin/dashboard");
-
-      props.loginHandler(true);
-
-      props.loginUserInfoHandler({id: reqData.id});
-
-    }).catch((err)=>{
-      console.log(err);
-      Swal.fire({
-        title: "로그인 실패",
-        text: "다시 시도해주세요",
-        icon: "error",
-      });
     })
+      .then((res) => {
+        console.log(res);
 
-  }
+        let token = res.data;
+        //axios 요청 마다 헤더에 accessToekn 담도록 설정
+        axios.defaults.headers.common["Authorization"] = "Bearer " + token;
+
+        // 메인페이지로 이동
+        navigate("/admin/dashboard");
+
+        props.loginHandler(true);
+
+        props.loginUserInfoHandler({
+          id: res.data.id,
+          email: res.data.email,
+          nickname: res.data.nickname,
+          role: res.data.roleName,
+        });
+
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "로그인 실패",
+          text: "다시 시도해주세요",
+          icon: "error",
+        });
+      });
+  };
 
   return (
     <>
@@ -60,7 +65,6 @@ function Login(props) {
         <Row>
           <Col md="12">
             <Card className="p-5">
-              
               <CardBody className="p-5">
                 <Row className="m-3 text-center">
                   <Col md="3 mt-1">
@@ -75,12 +79,16 @@ function Login(props) {
                     <h4>PW : </h4>
                   </Col>
                   <Col>
-                    <Input type="password" id="pw" placeholder="비밀번호를 입력해주세요"  />
+                    <Input
+                      type="password"
+                      id="pw"
+                      placeholder="비밀번호를 입력해주세요"
+                    />
                   </Col>
                 </Row>
                 <Row className="pt-5 justify-content-center">
-                  <Button  variant="primary" onClick={clickLogin}>
-                  Login
+                  <Button variant="primary" onClick={clickLogin}>
+                    Login
                   </Button>
                 </Row>
               </CardBody>

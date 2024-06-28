@@ -1,6 +1,7 @@
 package com.comucomu.comu.Controller;
 
 import com.comucomu.comu.DTO.LoginUserRequest;
+import com.comucomu.comu.DTO.LoginUserResponse;
 import com.comucomu.comu.Service.UserService;
 import com.comucomu.comu.config.TokenProvider;
 import com.comucomu.comu.entity.User;
@@ -37,7 +38,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> postLogin(@RequestBody LoginUserRequest loginUserRequest){
+    public ResponseEntity<LoginUserResponse> postLogin(@RequestBody LoginUserRequest loginUserRequest){
 
         //전달받은 유저가 실제 DB에 존재하는 유저인지 확인
         User user = userService.findById(loginUserRequest.getId());
@@ -48,10 +49,11 @@ public class UserController {
             //acess token 생성
             String token = tokenProvider.generateToken(user, Duration.ofHours(1));
 
-            
+            LoginUserResponse loginUserResponse = new LoginUserResponse(user, token);
+
             // 토큰 전달
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(token);
+                    .body(loginUserResponse);
         }
         //다른 경우 로그인 실패
         else{
