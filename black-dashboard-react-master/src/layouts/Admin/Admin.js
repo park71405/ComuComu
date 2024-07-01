@@ -96,7 +96,7 @@ function Admin(props) {
           } else if (response.component == "Category") {
             tmpObject.component = <Category />;
           } else if (response.component == "Chat"){
-            tmpObject.component = <Chat isLogin={isLogin} />;
+            tmpObject.component = <Chat isLogin={isLogin} userInfo={userInfo} />;
           }
 
           return tmpList.push(tmpObject);
