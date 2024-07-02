@@ -94,7 +94,7 @@ function Admin(props) {
           if (response.component == "Board") {
             tmpObject.component = <Board />;
           } else if (response.component == "Category") {
-            tmpObject.component = <Category />;
+            tmpObject.component = <Category cateInfo={tmpObject} />;
           } else if (response.component == "Chat"){
             tmpObject.component = <Chat isLogin={isLogin} userInfo={userInfo} />;
           }
@@ -213,7 +213,6 @@ function Admin(props) {
               }
             </div>
           </div>
-          <FixedPlugin bgColor={color} handleBgClick={changeColor} />
         </React.Fragment>
       )}
     </BackgroundColorContext.Consumer>

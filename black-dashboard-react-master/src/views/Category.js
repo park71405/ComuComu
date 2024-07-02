@@ -16,7 +16,7 @@ import {
   Table,
 } from "reactstrap";
 
-function Category() {
+function Category(props) {
   const [cateList, setCateList] = useState([]);
 
   // 카테고리 추가 버튼 클릭 관련 로직
@@ -317,9 +317,9 @@ function Category() {
           <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">Categirory Manage</CardTitle>
+                <CardTitle tag="h4">{props.cateInfo.name}</CardTitle>
               </CardHeader>
-              <Button variant="secondary" onClick={AddModalHandleShow}>
+              <Button className="mx-4" variant="secondary" onClick={AddModalHandleShow}>
                 Category Add
               </Button>
 

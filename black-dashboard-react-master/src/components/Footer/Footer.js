@@ -27,31 +27,28 @@ function Footer() {
       <Container fluid>
         <Nav>
           <NavItem>
-            <NavLink href="https://www.creative-tim.com/?ref=bdr-user-archive-footer">
-              Creative Tim
+            <NavLink href="https://www.notion.so/park71403/8a7680c38ee9460ca6b59bcfc8e677aa">
+              주식회사 ComuComu
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="https://www.creative-tim.com/presentation?ref=bdr-user-archive-footer">
+            <NavLink href="https://www.notion.so/park71403/8a7680c38ee9460ca6b59bcfc8e677aa">
               About Us
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="https://www.creative-tim.com/blog?ref=bdr-user-archive-footer">
+            <NavLink href="https://www.notion.so/park71403/8a7680c38ee9460ca6b59bcfc8e677aa">
               Blog
             </NavLink>
           </NavItem>
         </Nav>
         <div className="copyright">
-          © {new Date().getFullYear()} made with{" "}
-          <i className="tim-icons icon-heart-2" /> by{" "}
           <a
-            href="https://www.creative-tim.com/?ref=bdr-user-archive-footer"
+            href="https://www.notion.so/park71403/8a7680c38ee9460ca6b59bcfc8e677aa"
             target="_blank"
           >
-            Creative Tim
-          </a>{" "}
-          for a better web.
+            ComuComu
+          </a>
         </div>
       </Container>
     </footer>
