@@ -1,9 +1,6 @@
 package com.comucomu.comu.Controller;
 
-import com.comucomu.comu.DTO.AddCategoryRequest;
-import com.comucomu.comu.DTO.BoardResponse;
-import com.comucomu.comu.DTO.CategoryResponse;
-import com.comucomu.comu.DTO.UpdateCategoryRequest;
+import com.comucomu.comu.DTO.*;
 import com.comucomu.comu.Service.CategoryService;
 import com.comucomu.comu.entity.Category;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +19,7 @@ public class CategoryController {
     // 카테고리 전체조회
     @GetMapping("/cate/searchAll")
     public ResponseEntity<List<CategoryResponse>> findAllCategory(){
+
         List<CategoryResponse> categoryResponses = categoryService.findAll()
                 .stream()
                 .map(CategoryResponse::new)

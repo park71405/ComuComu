@@ -39,6 +39,18 @@ public class BoardController {
                 .body(boards);
     }
 
+    // 특정 카테고리의 게시글 전체 조회
+    @GetMapping("/board/searchAllByCate")
+    public ResponseEntity<List<BoardResponse>> findAllByCate(@RequestParam(value="no") String no){
+        List<BoardResponse> boards = boardService.findAllByCategory(Integer.parseInt(no))
+                .stream()
+                .map(BoardResponse::new)
+                .toList();
+
+        return ResponseEntity.ok()
+                .body(boards);
+    }
+
     // 게시글 단건 조회
     @GetMapping("/board/search/{no}")
     public ResponseEntity<BoardResponse> findBoard(@PathVariable int no){

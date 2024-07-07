@@ -11,13 +11,13 @@ import {
   Table,
 } from "reactstrap";
 
-function Board() {
+function Board(props) {
   const [cateList, setCateList] = useState([]);
 
   const clickButton = () => {
     axios({
       method: "GET",
-      url: "board/searchAll",
+      url: "board/searchAllByCate?no=" + props.cateInfo.no,
     })
       .then((res) => {
         console.log(res.data);
@@ -42,7 +42,7 @@ function Board() {
           <Col md="12">
             <Card>
               <CardHeader>
-                <CardTitle tag="h4">Free Board</CardTitle>
+                <CardTitle tag="h4">{props.cateInfo.name}</CardTitle>
               </CardHeader>
               <Button variant="secondary" onClick={() => clickButton()}>
                 Category Add Click Me!

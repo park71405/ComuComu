@@ -26,6 +26,11 @@ public class BoardService {
         return boardRepository.findAll();
     }
 
+    // 특정 카테고리의 게시글 전체 조회
+    public List<Board> findAllByCategory(int no){
+        return boardRepository.findByCategory_No(no);
+    }
+
     // 게시글 단건 조회
     public Board finadById(int no){
         return boardRepository.findById(no)

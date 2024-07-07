@@ -37,7 +37,7 @@ public class Category {
     @Column(nullable = false, name="component")
     private String component;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Board> boardList = new ArrayList<>();
 
     @Builder

@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
@@ -39,7 +40,7 @@ public class Board {
     private User user;
 
     // 작성일
-    @CreatedDate
+    @CreationTimestamp
     @Column(name = "regDate", nullable = false)
     private LocalDateTime regDate;
 
@@ -49,7 +50,7 @@ public class Board {
     private int count;
 
     // 카테고리 번호
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.REMOVE})
     @JoinColumn(name = "category_no")
     private Category category;
 

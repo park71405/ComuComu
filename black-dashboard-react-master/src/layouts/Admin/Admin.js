@@ -83,6 +83,7 @@ function Admin(props) {
       .then((res) => {
         res.data.map((response) => {
           let tmpObject = {
+            no: response.no,
             path: response.path,
             name: response.categoryName,
             icon: response.icon,
@@ -92,7 +93,7 @@ function Admin(props) {
 
           // 나중에 게시판 종류 늘어나면 추가하면 됨.
           if (response.component == "Board") {
-            tmpObject.component = <Board />;
+            tmpObject.component = <Board cateInfo={tmpObject}  />;
           } else if (response.component == "Category") {
             tmpObject.component = <Category cateInfo={tmpObject} />;
           } else if (response.component == "Chat"){
