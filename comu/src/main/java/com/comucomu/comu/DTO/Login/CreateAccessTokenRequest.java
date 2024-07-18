@@ -1,4 +1,4 @@
-package com.comucomu.comu.DTO;
+package com.comucomu.comu.DTO.Login;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -18,6 +18,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
+// React 를 사용하기로 결정하면서 현재는 사용 x... 의미 없음
+
 @Configuration
 @RequiredArgsConstructor
 public class WebSecurityConfig {

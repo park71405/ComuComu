@@ -1,10 +1,10 @@
 package com.comucomu.comu.Controller;
 
-import com.comucomu.comu.DTO.*;
+import com.comucomu.comu.DTO.Category.AddCategoryRequest;
+import com.comucomu.comu.DTO.Category.CategoryResponse;
+import com.comucomu.comu.DTO.Category.UpdateCategoryRequest;
 import com.comucomu.comu.Service.CategoryService;
-import com.comucomu.comu.entity.Category;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

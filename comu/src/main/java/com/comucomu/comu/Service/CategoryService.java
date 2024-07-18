@@ -1,7 +1,7 @@
 package com.comucomu.comu.Service;
 
-import com.comucomu.comu.DTO.AddCategoryRequest;
-import com.comucomu.comu.DTO.UpdateCategoryRequest;
+import com.comucomu.comu.DTO.Category.AddCategoryRequest;
+import com.comucomu.comu.DTO.Category.UpdateCategoryRequest;
 import com.comucomu.comu.Repository.CategoryRepository;
 import com.comucomu.comu.entity.Category;
 import jakarta.transaction.Transactional;
@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service

@@ -1,6 +1,6 @@
 package com.comucomu.comu.Service;
 
-import com.comucomu.comu.DTO.AddUserRequest;
+import com.comucomu.comu.DTO.Join.AddUserRequest;
 import com.comucomu.comu.Repository.UserRepository;
 import com.comucomu.comu.entity.User;
 import lombok.RequiredArgsConstructor;

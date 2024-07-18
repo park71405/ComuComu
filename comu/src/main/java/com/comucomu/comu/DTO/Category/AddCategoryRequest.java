@@ -1,11 +1,9 @@
-package com.comucomu.comu.DTO;
+package com.comucomu.comu.DTO.Category;
 
-import com.comucomu.comu.entity.Board;
 import com.comucomu.comu.entity.Category;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor

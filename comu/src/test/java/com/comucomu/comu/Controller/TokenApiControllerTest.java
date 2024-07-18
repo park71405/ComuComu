@@ -1,6 +1,6 @@
 package com.comucomu.comu.Controller;
 
-import com.comucomu.comu.DTO.CreateAccessTokenRequest;
+import com.comucomu.comu.DTO.Login.CreateAccessTokenRequest;
 import com.comucomu.comu.Repository.RefreshTokenRepository;
 import com.comucomu.comu.Repository.UserRepository;
 import com.comucomu.comu.Service.UserService;
@@ -18,8 +18,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 

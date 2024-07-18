@@ -1,4 +1,4 @@
-package com.comucomu.comu.DTO;
+package com.comucomu.comu.DTO.Category;
 
 import com.comucomu.comu.entity.Category;
 import lombok.AllArgsConstructor;

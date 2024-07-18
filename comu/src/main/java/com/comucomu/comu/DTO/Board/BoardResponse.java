@@ -1,4 +1,4 @@
-package com.comucomu.comu.DTO;
+package com.comucomu.comu.DTO.Board;
 
 import com.comucomu.comu.entity.Board;
 import com.comucomu.comu.entity.Category;

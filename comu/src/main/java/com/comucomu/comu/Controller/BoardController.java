@@ -1,6 +1,6 @@
 package com.comucomu.comu.Controller;
 
-import com.comucomu.comu.DTO.BoardResponse;
+import com.comucomu.comu.DTO.Board.BoardResponse;
 import com.comucomu.comu.Service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

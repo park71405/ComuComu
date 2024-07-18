@@ -1,9 +1,7 @@
-package com.comucomu.comu.DTO;
+package com.comucomu.comu.DTO.Login;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @NoArgsConstructor
 @Getter

@@ -1,6 +1,5 @@
-package com.comucomu.comu.DTO;
+package com.comucomu.comu.DTO.Login;
 
-import com.comucomu.comu.entity.Role;
 import com.comucomu.comu.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

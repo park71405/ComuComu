@@ -1,7 +1,7 @@
 package com.comucomu.comu.Controller;
 
-import com.comucomu.comu.DTO.CreateAccessTokenRequest;
-import com.comucomu.comu.DTO.CreateAccessTokenResponse;
+import com.comucomu.comu.DTO.Login.CreateAccessTokenRequest;
+import com.comucomu.comu.DTO.Login.CreateAccessTokenResponse;
 import com.comucomu.comu.Service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,8 @@
 package com.comucomu.comu.Controller;
 
-import com.comucomu.comu.DTO.LoginUserRequest;
-import com.comucomu.comu.DTO.LoginUserResponse;
+import com.comucomu.comu.DTO.Join.AddUserRequest;
+import com.comucomu.comu.DTO.Login.LoginUserRequest;
+import com.comucomu.comu.DTO.Login.LoginUserResponse;
 import com.comucomu.comu.Service.UserService;
 import com.comucomu.comu.config.TokenProvider;
 import com.comucomu.comu.entity.User;
@@ -10,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,16 +27,7 @@ public class UserController {
     private final UserService userService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    @GetMapping("/login")
-    public String login(){
-        return "login";
-    }
-
-    @GetMapping("/signup")
-    public String signup(){
-        return "signup";
-    }
-
+    // 로그인
     @PostMapping("/login")
     public ResponseEntity<LoginUserResponse> postLogin(@RequestBody LoginUserRequest loginUserRequest){
 
@@ -61,6 +52,14 @@ public class UserController {
                     .build();
         }
 
+    }
+
+    // 회원가입
+    @PostMapping("/user")
+    public String signup(@RequestBody AddUserRequest request){
+        userService.save(request);
+
+        return "redirect:/login";
     }
     
 
