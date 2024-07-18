@@ -1,7 +1,5 @@
 package com.comucomu.comu.Controller;
 
-import com.comucomu.comu.DTO.AddBoardRequest;
-import com.comucomu.comu.DTO.UpdateBoardReqeust;
 import com.comucomu.comu.Repository.BoardRepository;
 import com.comucomu.comu.entity.Board;
 import com.fasterxml.jackson.databind.ObjectMapper;
