@@ -19,7 +19,6 @@ public class BoardController {
     public ResponseEntity<List<BoardResponse>> findAllByCate(@RequestParam(value="no") String no){
         List<BoardResponse> boards = boardService.findAllByCategory(Integer.parseInt(no))
                 .stream()
-                .map(BoardResponse::new)
                 .toList();
 
         return ResponseEntity.ok()

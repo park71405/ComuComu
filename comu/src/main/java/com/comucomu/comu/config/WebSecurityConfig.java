@@ -18,8 +18,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
-// React 를 사용하기로 결정하면서 현재는 사용 x... 의미 없음
-
 @Configuration
 @RequiredArgsConstructor
 public class WebSecurityConfig {
@@ -39,7 +37,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests((authorize) -> authorize
-                        //.requestMatchers("/login", "/signup", "/user").permitAll()
+                        .requestMatchers("/").permitAll()
                         // 아직 로그인 관련 설정이 마무리되지 않아 security 기능 꺼둠
                         .requestMatchers("/**").permitAll()
                         .anyRequest().authenticated()

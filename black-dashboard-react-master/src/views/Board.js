@@ -1,12 +1,19 @@
 import axios from "axios";
+import PageManage from "components/PageManage";
 import { useState } from "react";
 import {
   Button,
+  ButtonGroup,
+  ButtonToolbar,
   Card,
   CardBody,
+  CardFooter,
   CardHeader,
   CardTitle,
   Col,
+  Container,
+  Pagination,
+  PaginationItem,
   Row,
   Table,
 } from "reactstrap";
@@ -25,7 +32,7 @@ function Board(props) {
         const list = [];
 
         res.data.map((response) => {
-          return list.push({ no: response.no, name: response.categoryName });
+          return list.push({ no: response.no, title: response.title, content:response.content, count: response.count, regDate: response.regDate, nickname: response.username });
         });
 
         setCateList(list);
@@ -40,12 +47,12 @@ function Board(props) {
       <div className="content">
         <Row>
           <Col md="12">
-            <Card>
+            <Card style={{ height: "calc(100vh - 210px)" }}>
               <CardHeader>
                 <CardTitle tag="h4">{props.cateInfo.name}</CardTitle>
               </CardHeader>
               <Button variant="secondary" onClick={() => clickButton()}>
-                Category Add Click Me!
+                조회
               </Button>
               <CardBody>
                 {cateList.length === 0 ? (
@@ -55,7 +62,11 @@ function Board(props) {
                     <thead className="text-primary">
                       <tr>
                         <th>No.</th>
-                        <th>Category Name</th>
+                        <th>Title</th>
+                        <th>Content</th>
+                        <th>조회수</th>
+                        <th>등록일</th>
+                        <th>작성자</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -63,7 +74,11 @@ function Board(props) {
                         return (
                           <tr key={cate.no}>
                             <td>{cate.no}</td>
-                            <td>{cate.name}</td>
+                            <td>{cate.title}</td>
+                            <th>{cate.content}</th>
+                            <th>{cate.count}</th>
+                            <th>{cate.regDate}</th>
+                            <th>{cate.nickname}</th>
                           </tr>
                         );
                       })}
@@ -71,6 +86,11 @@ function Board(props) {
                   </Table>
                 )}
               </CardBody>
+              <CardFooter>
+                <Container>
+                  <PageManage count={cateList.length} />
+                </Container>
+              </CardFooter>
             </Card>
           </Col>
         </Row>
