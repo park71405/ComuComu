@@ -17,7 +17,7 @@ function PageManage(props) {
           <Button>&gt;</Button>
         </ButtonGroup>
       </ButtonToolbar>
-      {props.count}
+      {props.page}
     </>
   );
 }

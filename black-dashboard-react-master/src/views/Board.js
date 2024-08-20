@@ -3,8 +3,6 @@ import PageManage from "components/PageManage";
 import { useState } from "react";
 import {
   Button,
-  ButtonGroup,
-  ButtonToolbar,
   Card,
   CardBody,
   CardFooter,
@@ -12,19 +10,18 @@ import {
   CardTitle,
   Col,
   Container,
-  Pagination,
-  PaginationItem,
   Row,
   Table,
 } from "reactstrap";
 
 function Board(props) {
   const [cateList, setCateList] = useState([]);
+  const [page, setPage] = useState(1);
 
   const clickButton = () => {
     axios({
       method: "GET",
-      url: "board/searchAllByCate?no=" + props.cateInfo.no,
+      url: "board/searchAllByCate?no=" + props.cateInfo.no + "&page=" + page,
     })
       .then((res) => {
         console.log(res.data);
@@ -48,10 +45,10 @@ function Board(props) {
         <Row>
           <Col md="12">
             <Card style={{ height: "calc(100vh - 210px)" }}>
-              <CardHeader>
+              <CardHeader className="mx-3">
                 <CardTitle tag="h4">{props.cateInfo.name}</CardTitle>
               </CardHeader>
-              <Button variant="secondary" onClick={() => clickButton()}>
+              <Button className="mx-4" variant="secondary" onClick={() => clickButton()}>
                 조회
               </Button>
               <CardBody>
@@ -88,7 +85,7 @@ function Board(props) {
               </CardBody>
               <CardFooter>
                 <Container>
-                  <PageManage count={cateList.length} />
+                  <PageManage count={cateList.length} page={page} />
                 </Container>
               </CardFooter>
             </Card>

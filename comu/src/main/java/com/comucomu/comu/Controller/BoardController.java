@@ -16,8 +16,8 @@ public class BoardController {
 
     // 특정 카테고리의 게시글 전체 조회
     @GetMapping("/board/searchAllByCate")
-    public ResponseEntity<List<BoardResponse>> findAllByCate(@RequestParam(value="no") String no){
-        List<BoardResponse> boards = boardService.findAllByCategory(Integer.parseInt(no))
+    public ResponseEntity<List<BoardResponse>> findAllByCate(@RequestParam(value="no") String no, @RequestParam(value="page") String page){
+        List<BoardResponse> boards = boardService.findAllByCategory(Integer.parseInt(no), Integer.parseInt(page))
                 .stream()
                 .toList();
 
