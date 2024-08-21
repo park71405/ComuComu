@@ -20,6 +20,7 @@ public class BoardRepositoryCustom {
 
     private final JPAQueryFactory queryFactory;
 
+    // 특정 카테고리의 게시글 전체 조회
     public List<BoardResponse> findByCategoryNo(int category_no, Pageable pageable) {
 
         QBoard board = QBoard.board;
@@ -35,6 +36,18 @@ public class BoardRepositoryCustom {
                 .stream()
                 .map(BoardResponse::new)
                 .collect(Collectors.toList());
+    }
+
+    // 특정 카테고리의 게시글 개수 조회
+    public int getTotalPage(int category_no){
+        QBoard qBoard = QBoard.board;
+
+        return queryFactory
+                .select(qBoard.count())
+                .from(qBoard)
+                .where(qBoard.category.no.eq(category_no))
+                .fetchOne()
+                .intValue();
     }
 
 }

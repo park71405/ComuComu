@@ -25,4 +25,11 @@ public class BoardController {
                 .body(boards);
     }
 
+    // 특정 카테고리의 게시글 개수 조회
+    @GetMapping("/board/getTotalPage")
+    public int getTotalPage(@RequestParam(value="categoryNo") String categoryNo){
+
+        return boardService.getTotalPage(Integer.parseInt(categoryNo));
+    }
+
 }

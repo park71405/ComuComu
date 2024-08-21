@@ -25,4 +25,11 @@ public class BoardService {
 
         return boardRepository.findByCategoryNo(no, pageable);
     }
+
+    // 특정 카테고리의 게시글 개수 조회
+    public int getTotalPage(int category_no){
+
+        return boardRepository.getTotalPage(category_no);
+    }
+
 }

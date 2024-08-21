@@ -1,6 +1,6 @@
 import axios from "axios";
 import PageManage from "components/PageManage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -17,8 +17,32 @@ import {
 function Board(props) {
   const [cateList, setCateList] = useState([]);
   const [page, setPage] = useState(1);
+  const [boardCount, setBoardCount] = useState(0);
 
-  const clickButton = () => {
+  useEffect(() => {
+    // 페이지 총 개수 확인
+    getTotalPage();
+
+    // 페이지 전체 조회
+    getBoard();
+  }, []);
+
+  const getTotalPage = () => {
+    axios({
+      method: "GET",
+      url: "board/getTotalPage?categoryNo=" + props.cateInfo.no,
+    })
+      .then((res) => {
+        console.log("board/getTotalPage");
+        console.log(res.data);
+        setBoardCount(res.data);
+      })
+      .catch((err) => {
+        console.log(err); 
+      });
+  };
+
+  const getBoard = () => {
     axios({
       method: "GET",
       url: "board/searchAllByCate?no=" + props.cateInfo.no + "&page=" + page,
@@ -29,7 +53,14 @@ function Board(props) {
         const list = [];
 
         res.data.map((response) => {
-          return list.push({ no: response.no, title: response.title, content:response.content, count: response.count, regDate: response.regDate, nickname: response.username });
+          return list.push({
+            no: response.no,
+            title: response.title,
+            content: response.content,
+            count: response.count,
+            regDate: response.regDate,
+            nickname: response.username,
+          });
         });
 
         setCateList(list);
@@ -38,6 +69,10 @@ function Board(props) {
         console.log(err);
       });
   };
+
+  const clickButton = () =>{
+
+  }
 
   return (
     <>
@@ -48,10 +83,14 @@ function Board(props) {
               <CardHeader className="mx-3">
                 <CardTitle tag="h4">{props.cateInfo.name}</CardTitle>
               </CardHeader>
-              <Button className="mx-4" variant="secondary" onClick={() => clickButton()}>
-                조회
+              <Button
+                className="mx-4"
+                variant="secondary"
+                onClick={() => clickButton()}
+              >
+                글 작성
               </Button>
-              <CardBody>
+              <CardBody className="mt-4">
                 {cateList.length === 0 ? (
                   <h3 className="text-center">no data ...</h3>
                 ) : (
@@ -85,7 +124,7 @@ function Board(props) {
               </CardBody>
               <CardFooter>
                 <Container>
-                  <PageManage count={cateList.length} page={page} />
+                  <PageManage count={cateList.length} page={page} boardCount={boardCount} />
                 </Container>
               </CardFooter>
             </Card>
