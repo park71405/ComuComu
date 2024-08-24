@@ -25,7 +25,11 @@ function Board(props) {
 
     // 페이지 전체 조회
     getBoard();
-  }, []);
+  }, [page]);
+
+  const pageHandler = (res) => {
+    setPage(res)
+  }
 
   const getTotalPage = () => {
     axios({
@@ -48,6 +52,7 @@ function Board(props) {
       url: "board/searchAllByCate?no=" + props.cateInfo.no + "&page=" + page,
     })
       .then((res) => {
+        console.log("board/searchAllByCate");
         console.log(res.data);
 
         const list = [];
@@ -124,7 +129,7 @@ function Board(props) {
               </CardBody>
               <CardFooter>
                 <Container>
-                  <PageManage count={cateList.length} page={page} boardCount={boardCount} />
+                  <PageManage count={cateList.length} page={page} pageHandler={pageHandler} boardCount={boardCount} />
                 </Container>
               </CardFooter>
             </Card>
