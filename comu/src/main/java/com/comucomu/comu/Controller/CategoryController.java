@@ -2,6 +2,7 @@ package com.comucomu.comu.Controller;
 
 import com.comucomu.comu.DTO.Category.AddCategoryRequest;
 import com.comucomu.comu.DTO.Category.CategoryResponse;
+import com.comucomu.comu.DTO.Category.PostSearchCateRequest;
 import com.comucomu.comu.DTO.Category.UpdateCategoryRequest;
 import com.comucomu.comu.Service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,19 @@ public class CategoryController {
     // 카테고리 전체조회
     @GetMapping("/cate/searchAll")
     public ResponseEntity<List<CategoryResponse>> findAllCategory(){
+
+        List<CategoryResponse> categoryResponses = categoryService.findAll()
+                .stream()
+                .map(CategoryResponse::new)
+                .toList();
+
+        return ResponseEntity.ok()
+                .body(categoryResponses);
+    }
+
+    // 카테고리 권한 별 조회
+    @PostMapping("/cate/searchAll")
+    public ResponseEntity<List<CategoryResponse>> postFindAllCategory(@RequestBody PostSearchCateRequest postSearchCateRequest){
 
         List<CategoryResponse> categoryResponses = categoryService.findAll()
                 .stream()

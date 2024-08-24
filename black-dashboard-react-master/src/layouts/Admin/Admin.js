@@ -66,6 +66,10 @@ function Admin(props) {
   const [routes, setRoutes] = React.useState([{}]);
 
   React.useEffect(() => {
+
+    console.log("userInfo");
+    console.log(userInfo.role);
+
     let tmpList = [
       {
         path: "/dashboard",
@@ -77,8 +81,11 @@ function Admin(props) {
     ];
 
     axios({
-      method: "GET",
+      method: "POST",
       url: "cate/searchAll",
+      data: {
+        role: userInfo.role
+      }
     })
       .then((res) => {
         res.data.map((response) => {

@@ -2,6 +2,7 @@ package com.comucomu.comu.entity;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -25,6 +26,13 @@ public class Role {
 
     @OneToMany(mappedBy = "role", fetch = FetchType.LAZY)
     private List<User> user;
+
+    @Builder
+    public Role(int id, String roleName, List<User> user){
+        this.id = id;
+        this.roleName = roleName;
+        this.user = user;
+    }
 
 
 }

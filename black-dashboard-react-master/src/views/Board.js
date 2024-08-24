@@ -58,12 +58,15 @@ function Board(props) {
         const list = [];
 
         res.data.map((response) => {
+          let tmp = response.regDate;
+          tmp = tmp.split("T");
+
           return list.push({
             no: response.no,
             title: response.title,
             content: response.content,
             count: response.count,
-            regDate: response.regDate,
+            regDate: tmp[0],
             nickname: response.username,
           });
         });
@@ -103,7 +106,7 @@ function Board(props) {
                     <thead className="text-primary">
                       <tr>
                         <th>No.</th>
-                        <th>Title</th>
+                        <th>제목</th>
                         <th>Content</th>
                         <th>조회수</th>
                         <th>등록일</th>
@@ -114,12 +117,12 @@ function Board(props) {
                       {cateList.map((cate) => {
                         return (
                           <tr key={cate.no}>
-                            <td>{cate.no}</td>
-                            <td>{cate.title}</td>
-                            <th>{cate.content}</th>
-                            <th>{cate.count}</th>
-                            <th>{cate.regDate}</th>
-                            <th>{cate.nickname}</th>
+                            <td className="col-1">{cate.no}</td>
+                            <td className="col-3">{cate.title}</td>
+                            <td className="col-4">{cate.content}</td>
+                            <td className="col-1">{cate.count}</td>
+                            <td className="col-2">{cate.regDate}</td>
+                            <td className="col-1">{cate.nickname}</td>
                           </tr>
                         );
                       })}

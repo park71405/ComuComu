@@ -1,23 +1,37 @@
 package com.comucomu.comu.Service;
 
 import com.comucomu.comu.DTO.Category.AddCategoryRequest;
+import com.comucomu.comu.DTO.Category.PostSearchCateRequest;
 import com.comucomu.comu.DTO.Category.UpdateCategoryRequest;
 import com.comucomu.comu.Repository.CategoryRepository;
+import com.comucomu.comu.Repository.RoleRepository;
 import com.comucomu.comu.entity.Category;
+import com.comucomu.comu.entity.Role;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final RoleRepository roleRepository;
 
     // 카테고리 전체 조회
     public List<Category> findAll(){
+        return categoryRepository.findAll();
+    }
+
+    // 카테고리 권한 별 조회
+    public List<Category> findAll(PostSearchCateRequest postSearchCateRequest){
+
+        // role_id 찾기
+        Optional<Role> roleId = roleRepository.findByRoleName(postSearchCateRequest.getRole());
+
         return categoryRepository.findAll();
     }
 
