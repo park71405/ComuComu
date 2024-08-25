@@ -3,7 +3,9 @@ package com.comucomu.comu.Service;
 import com.comucomu.comu.DTO.Category.AddCategoryRequest;
 import com.comucomu.comu.DTO.Category.PostSearchCateRequest;
 import com.comucomu.comu.DTO.Category.UpdateCategoryRequest;
+import com.comucomu.comu.Repository.BoardRepositoryCustom;
 import com.comucomu.comu.Repository.CategoryRepository;
+import com.comucomu.comu.Repository.CategoryRepositoryCustom;
 import com.comucomu.comu.Repository.RoleRepository;
 import com.comucomu.comu.entity.Category;
 import com.comucomu.comu.entity.Role;
@@ -19,6 +21,7 @@ import java.util.Optional;
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
+    private final CategoryRepositoryCustom categoryRepositoryCustom;
     private final RoleRepository roleRepository;
 
     // 카테고리 전체 조회
@@ -30,9 +33,12 @@ public class CategoryService {
     public List<Category> findAll(PostSearchCateRequest postSearchCateRequest){
 
         // role_id 찾기
-        Optional<Role> roleId = roleRepository.findByRoleName(postSearchCateRequest.getRole());
+        int roleId = roleRepository.findByRoleName(postSearchCateRequest.getRole())
+                .map(Role::getId)
+                .orElse(0);
 
-        return categoryRepository.findAll();
+        // roleId에 따라 카테고리 조회
+        return categoryRepositoryCustom.findCategorysByRoleId(roleId);
     }
 
     // 카테고리 추가

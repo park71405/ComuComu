@@ -62,6 +62,9 @@ public class TokenApiControllerTest {
     @DisplayName("createNewAccessToken : 새로운 액세스 토큰을 발급")
     @Test
     public void createNewAccessToken() throws Exception{
+
+        refreshTokenRepository.deleteAll();
+
         // given
         final String url = "/api/token";
 

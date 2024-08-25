@@ -32,6 +32,8 @@ public class QCategory extends EntityPathBase<Category> {
 
     public final StringPath path = createString("path");
 
+    public final ListPath<RoleToCategory, QRoleToCategory> roleToCategories = this.<RoleToCategory, QRoleToCategory>createList("roleToCategories", RoleToCategory.class, QRoleToCategory.class, PathInits.DIRECT2);
+
     public QCategory(String variable) {
         super(Category.class, forVariable(variable));
     }

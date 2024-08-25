@@ -40,6 +40,9 @@ public class Category {
     @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
     private List<Board> boardList = new ArrayList<>();
 
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<RoleToCategory> roleToCategories;
+
     @Builder
     public Category(int no, String path, String categoryName, String icon, String component, List<Board> boardList) {
         this.no = no;

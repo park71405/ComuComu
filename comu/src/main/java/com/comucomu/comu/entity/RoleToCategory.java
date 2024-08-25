@@ -1,6 +1,7 @@
 package com.comucomu.comu.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -15,12 +16,18 @@ public class RoleToCategory {
     @Column(name = "roletocate_id")
     private int id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_no", nullable = false)
     private Category category;
+
+    @Builder
+    public RoleToCategory(Category category, Role role) {
+        this.category = category;
+        this.role = role;
+    }
 
 }

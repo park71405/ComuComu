@@ -34,7 +34,7 @@ public class CategoryController {
     @PostMapping("/cate/searchAll")
     public ResponseEntity<List<CategoryResponse>> postFindAllCategory(@RequestBody PostSearchCateRequest postSearchCateRequest){
 
-        List<CategoryResponse> categoryResponses = categoryService.findAll()
+        List<CategoryResponse> categoryResponses = categoryService.findAll(postSearchCateRequest)
                 .stream()
                 .map(CategoryResponse::new)
                 .toList();
