@@ -67,9 +67,6 @@ function Admin(props) {
 
   React.useEffect(() => {
 
-    console.log("userInfo");
-    console.log(userInfo.role);
-
     let tmpList = [
       {
         path: "/dashboard",

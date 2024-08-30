@@ -35,7 +35,7 @@ public class CategoryService {
         // role_id 찾기
         int roleId = roleRepository.findByRoleName(postSearchCateRequest.getRole())
                 .map(Role::getId)
-                .orElse(0);
+                .orElse(3);
 
         // roleId에 따라 카테고리 조회
         return categoryRepositoryCustom.findCategorysByRoleId(roleId);

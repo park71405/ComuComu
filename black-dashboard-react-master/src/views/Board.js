@@ -25,7 +25,7 @@ function Board(props) {
 
     // 페이지 전체 조회
     getBoard();
-  }, [page]);
+  }, [page, props.cateInfo.no]);
 
   const pageHandler = (res) => {
     setPage(res)
