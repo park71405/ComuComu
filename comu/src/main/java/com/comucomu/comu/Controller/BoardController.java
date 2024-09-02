@@ -1,5 +1,6 @@
 package com.comucomu.comu.Controller;
 
+import com.comucomu.comu.DTO.Board.BoardAddRequest;
 import com.comucomu.comu.DTO.Board.BoardResponse;
 import com.comucomu.comu.Service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,12 @@ public class BoardController {
     public int getTotalPage(@RequestParam(value="categoryNo") String categoryNo){
 
         return boardService.getTotalPage(Integer.parseInt(categoryNo));
+    }
+
+    // 특정 카테고리의 게시글 추가
+    @PostMapping("/board")
+    public int AddBoard(@RequestBody BoardAddRequest boardAddRequest){
+        return boardService.addBoard(boardAddRequest);
     }
 
 }

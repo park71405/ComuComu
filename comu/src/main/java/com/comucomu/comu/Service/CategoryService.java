@@ -1,9 +1,7 @@
 package com.comucomu.comu.Service;
 
 import com.comucomu.comu.DTO.Category.AddCategoryRequest;
-import com.comucomu.comu.DTO.Category.PostSearchCateRequest;
 import com.comucomu.comu.DTO.Category.UpdateCategoryRequest;
-import com.comucomu.comu.Repository.BoardRepositoryCustom;
 import com.comucomu.comu.Repository.CategoryRepository;
 import com.comucomu.comu.Repository.CategoryRepositoryCustom;
 import com.comucomu.comu.Repository.RoleRepository;
@@ -14,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -30,10 +27,10 @@ public class CategoryService {
     }
 
     // 카테고리 권한 별 조회
-    public List<Category> findAll(PostSearchCateRequest postSearchCateRequest){
+    public List<Category> findAll(String role){
 
         // role_id 찾기
-        int roleId = roleRepository.findByRoleName(postSearchCateRequest.getRole())
+        int roleId = roleRepository.findByRoleName(role)
                 .map(Role::getId)
                 .orElse(3);
 

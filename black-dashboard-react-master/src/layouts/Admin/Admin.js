@@ -78,11 +78,11 @@ function Admin(props) {
     ];
 
     axios({
-      method: "POST",
-      url: "cate/searchAll",
-      data: {
-        role: userInfo.role
-      }
+      method: "GET",
+      url: "/cate/searchAll",
+      params: {
+        role: userInfo.role,
+      },
     })
       .then((res) => {
         res.data.map((response) => {
@@ -97,7 +97,7 @@ function Admin(props) {
 
           // 나중에 게시판 종류 늘어나면 추가하면 됨.
           if (response.component == "Board") {
-            tmpObject.component = <Board cateInfo={tmpObject}  />;
+            tmpObject.component = <Board cateInfo={tmpObject} userInfo={userInfo}/>;
           } else if (response.component == "Category") {
             tmpObject.component = <Category cateInfo={tmpObject} />;
           } else if (response.component == "Chat"){

@@ -2,7 +2,6 @@ package com.comucomu.comu.Controller;
 
 import com.comucomu.comu.DTO.Category.AddCategoryRequest;
 import com.comucomu.comu.DTO.Category.CategoryResponse;
-import com.comucomu.comu.DTO.Category.PostSearchCateRequest;
 import com.comucomu.comu.DTO.Category.UpdateCategoryRequest;
 import com.comucomu.comu.Service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,7 @@ public class CategoryController {
     private final CategoryService categoryService;
 
     // 카테고리 전체조회
-    @GetMapping("/cate/searchAll")
+    @GetMapping("/cate")
     public ResponseEntity<List<CategoryResponse>> findAllCategory(){
 
         List<CategoryResponse> categoryResponses = categoryService.findAll()
@@ -31,10 +30,10 @@ public class CategoryController {
     }
 
     // 카테고리 권한 별 조회
-    @PostMapping("/cate/searchAll")
-    public ResponseEntity<List<CategoryResponse>> postFindAllCategory(@RequestBody PostSearchCateRequest postSearchCateRequest){
+    @GetMapping("/cate/searchAll")
+    public ResponseEntity<List<CategoryResponse>> postFindAllCategory(@RequestParam(value="role", required = false) String role){
 
-        List<CategoryResponse> categoryResponses = categoryService.findAll(postSearchCateRequest)
+        List<CategoryResponse> categoryResponses = categoryService.findAll(role)
                 .stream()
                 .map(CategoryResponse::new)
                 .toList();
@@ -46,10 +45,7 @@ public class CategoryController {
     // 카테고리 추가
     @PostMapping("/cate")
     public int AddCategory(@RequestBody AddCategoryRequest addCategoryRequest) {
-
-        int categoryNo = categoryService.addCategory(addCategoryRequest);
-
-        return categoryNo;
+        return categoryService.addCategory(addCategoryRequest);
     }
 
     // 카테고리 삭제

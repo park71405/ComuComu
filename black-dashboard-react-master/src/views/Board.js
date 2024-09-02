@@ -10,11 +10,57 @@ import {
   CardTitle,
   Col,
   Container,
+  Input,
+  Modal,
+  ModalBody,
+  ModalFooter,
   Row,
   Table,
 } from "reactstrap";
 
 function Board(props) {
+  // 게시글 추가 버튼 클릭 관련 로직
+  const [addModalShow, setAddModalShow] = useState(false);
+  const AddModalHandleClose = () => setAddModalShow(false);
+  const AddModalHandleShow = () => setAddModalShow(true);
+
+  // 카테고리 추가 Form
+  const [boardForm, setBoardForm] = useState({
+    title: "",
+    content: "",
+    userId: props.userInfo,
+    category: "",
+  });
+
+  // 게시글 추가의 창닫기 버튼 클릭 시 boardForm 값 초기화
+  const resetBoardForm = () => {
+    setBoardForm({
+      title: "",
+      content: "",
+      userId: "",
+      category: "",
+    });
+    AddModalHandleClose();
+  };
+
+  // 글 작성 추가 모달의 값 변경 관리
+  const onChangeBoardForm = (e) => {
+    setBoardForm({
+      ...boardForm,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // 글 작성 추가 모달의 save버튼 클릭
+  const addBoard = () => {
+    // 글 작성 추가 모달창 닫기
+    AddModalHandleClose();
+
+    console.log(boardForm);
+
+
+  };
+
   const [cateList, setCateList] = useState([]);
   const [page, setPage] = useState(1);
   const [boardCount, setBoardCount] = useState(0);
@@ -28,8 +74,8 @@ function Board(props) {
   }, [page, props.cateInfo.no]);
 
   const pageHandler = (res) => {
-    setPage(res)
-  }
+    setPage(res);
+  };
 
   const getTotalPage = () => {
     axios({
@@ -42,7 +88,7 @@ function Board(props) {
         setBoardCount(res.data);
       })
       .catch((err) => {
-        console.log(err); 
+        console.log(err);
       });
   };
 
@@ -78,14 +124,60 @@ function Board(props) {
       });
   };
 
-  const clickButton = () =>{
-
-  }
+  const clickButton = () => {};
 
   return (
     <>
       <div className="content">
         <Row>
+          <Modal isOpen={addModalShow}>
+            <ModalBody className="mt-1">
+              <Row className="m-1 py-1">
+                <Col sm={3} className="mt-1">
+                  제목 :{" "}
+                </Col>
+                <Col sm={9}>
+                  <Input
+                    id="boardTitleInput"
+                    placeholder="제목을 입력해주세요"
+                    defaultValue={boardForm.title}
+                    style={{ color: "black" }}
+                    name="title"
+                    onChange={onChangeBoardForm}
+                  />
+                </Col>
+              </Row>
+              <Row className="m-1 py-1">
+                <Col sm={3} className="mt-1">
+                  내용 :{" "}
+                </Col>
+                <Col sm={9}>
+                  <Input
+                    id="boardContentInput"
+                    placeholder="내용을 입력해주세요"
+                    defaultValue={boardForm.content}
+                    style={{ color: "black" }}
+                    name="content"
+                    type="textarea"
+                    onChange={onChangeBoardForm}
+                  />
+                </Col>
+              </Row>
+            </ModalBody>
+            <ModalFooter className="justify-content-end m-3">
+              <Button
+                className="m-1"
+                size="sm"
+                variant="primary"
+                onClick={addBoard}
+              >
+                Save
+              </Button>
+              <Button size="sm" variant="primary" onClick={resetBoardForm}>
+                Close
+              </Button>
+            </ModalFooter>
+          </Modal>
           <Col md="12">
             <Card style={{ height: "calc(100vh - 210px)" }}>
               <CardHeader className="mx-3">
@@ -94,7 +186,7 @@ function Board(props) {
               <Button
                 className="mx-4"
                 variant="secondary"
-                onClick={() => clickButton()}
+                onClick={AddModalHandleShow}
               >
                 글 작성
               </Button>
@@ -132,7 +224,12 @@ function Board(props) {
               </CardBody>
               <CardFooter>
                 <Container>
-                  <PageManage count={cateList.length} page={page} pageHandler={pageHandler} boardCount={boardCount} />
+                  <PageManage
+                    count={cateList.length}
+                    page={page}
+                    pageHandler={pageHandler}
+                    boardCount={boardCount}
+                  />
                 </Container>
               </CardFooter>
             </Card>

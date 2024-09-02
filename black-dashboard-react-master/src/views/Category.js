@@ -185,7 +185,7 @@ function Category(props) {
   const searchCategoryAll = () => {
     axios({
       method: "GET",
-      url: "cate/searchAll",
+      url: "cate",
     })
       .then((res) => {
         console.log(res.data);
