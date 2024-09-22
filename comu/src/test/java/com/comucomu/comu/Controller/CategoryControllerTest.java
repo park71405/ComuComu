@@ -14,6 +14,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -47,4 +48,21 @@ class CategoryControllerTest {
                 .andExpect(status().isOk());
 
     }
+
+    @DisplayName("카테고리 권한별 조회에 성공한다.")
+    @Test
+    void postFindAllCategory() throws Exception {
+
+        // given
+        final String url = "/cate/searchAll";
+
+        // when
+        final ResultActions resultActions = mockMvc.perform(get(url))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+
+        // then
+        resultActions
+                .andExpect(status().isOk());
+    }
+
 }

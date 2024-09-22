@@ -1,6 +1,7 @@
 import axios from "axios";
 import PageManage from "components/PageManage";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import {
   Button,
   Card,
@@ -29,7 +30,7 @@ function Board(props) {
     title: "",
     content: "",
     userId: props.userInfo,
-    category: "",
+    category: props.cateInfo.no,
   });
 
   // 게시글 추가의 창닫기 버튼 클릭 시 boardForm 값 초기화
@@ -58,6 +59,29 @@ function Board(props) {
 
     console.log(boardForm);
 
+    if(boardForm.userId == ""){
+      Swal.fire({
+        title: "로그인이 필요한 기능입니다.",
+        icon: "info",
+      });
+    }else if(boardForm.category == ""){
+      Swal.fire({
+        title: "잘못된 접근입니다.",
+        icon: "info",
+      });
+    }
+
+    if(boardForm.title == ""){
+      Swal.fire({
+        title: "제목을 입력해주세요.",
+        icon: "info",
+      });
+    }else if(boardForm.content == ""){
+      Swal.fire({
+        title: "내용을 입력해주세요.",
+        icon: "info",
+      });
+    }
 
   };
 

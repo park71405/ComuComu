@@ -40,7 +40,6 @@ public class Board {
     private User user;
 
     // 작성일
-    @CreationTimestamp
     @Column(name = "regDate", nullable = false)
     private LocalDateTime regDate;
 
