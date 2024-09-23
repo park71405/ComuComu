@@ -101,6 +101,7 @@ function Category(props) {
       .finally(() => {
         // 모달창 닫고 cateForm 값 초기화
         resetCateForm();
+        // 카테고리 재조회
         searchCategoryAll();
       });
   }

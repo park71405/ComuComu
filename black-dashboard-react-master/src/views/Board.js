@@ -29,7 +29,7 @@ function Board(props) {
   const [boardForm, setBoardForm] = useState({
     title: "",
     content: "",
-    userId: props.userInfo,
+    userId: (props.isLogin ? props.userInfo : ""),
     category: props.cateInfo.no,
   });
 
@@ -59,7 +59,7 @@ function Board(props) {
 
     console.log(boardForm);
 
-    if(boardForm.userId == ""){
+    if(boardForm.userId == "" ){
       Swal.fire({
         title: "로그인이 필요한 기능입니다.",
         icon: "info",
@@ -67,7 +67,7 @@ function Board(props) {
     }else if(boardForm.category == ""){
       Swal.fire({
         title: "잘못된 접근입니다.",
-        icon: "info",
+        icon: "error",
       });
     }
 
@@ -82,6 +82,29 @@ function Board(props) {
         icon: "info",
       });
     }
+
+    axios({
+      method: "POST",
+      data: boardForm,
+      url: "board"
+    }).then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      Swal.fire({
+        title: "게시글 작성 실패",
+        text: "잠시 후 다시 시도해주세요",
+        icon: "error",
+      });
+    }).finally(() => {
+      // 모달창 닫고 boardForm 값 초기화
+      resetBoardForm();
+      
+      // 페이지 총 개수 확인
+      getTotalPage();
+
+      // 페이지 전체 조회
+      getBoard();
+    });
 
   };
 
