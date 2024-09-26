@@ -1,6 +1,7 @@
 package com.comucomu.comu.DTO.Board;
 
 import com.comucomu.comu.entity.Board;
+import com.comucomu.comu.entity.Category;
 import com.comucomu.comu.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +15,7 @@ public class BoardAddRequest {
     private String title;
     private String content;
     private String userId;
-    private int category;
+    private String category;
 
     public Board toEntity(){
         return Board.builder()
@@ -23,6 +24,9 @@ public class BoardAddRequest {
                 .user(User.builder()
                         .id(userId)
                         .build())
+                .category(Category.builder()
+                            .no(Integer.parseInt(category))
+                            .build())
                 .build();
     }
 

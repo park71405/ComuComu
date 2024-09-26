@@ -29,17 +29,40 @@ function Board(props) {
   const [boardForm, setBoardForm] = useState({
     title: "",
     content: "",
-    userId: (props.isLogin ? props.userInfo : ""),
+    userId: (props.isLogin ? props.userInfo.id : ""),
     category: props.cateInfo.no,
   });
+
+  // 글 작성 버튼 클릭
+  const AddModalHandle = () => {
+    if(boardForm.userId == "" ){
+      Swal.fire({
+        title: "로그인이 필요한 기능입니다.",
+        icon: "info",
+      });
+      // 모달창 닫고 boardForm 값 초기화
+      resetBoardForm();
+      return;
+    }else if(boardForm.category == ""){
+      Swal.fire({
+        title: "잘못된 접근입니다.",
+        icon: "error",
+      });
+      // 모달창 닫고 boardForm 값 초기화
+      resetBoardForm();
+      return;
+    }else{
+      AddModalHandleShow();
+    }
+  }
 
   // 게시글 추가의 창닫기 버튼 클릭 시 boardForm 값 초기화
   const resetBoardForm = () => {
     setBoardForm({
       title: "",
       content: "",
-      userId: "",
-      category: "",
+      userId: (props.isLogin ? props.userInfo.id : ""),
+      category: props.cateInfo.no,
     });
     AddModalHandleClose();
   };
@@ -59,32 +82,26 @@ function Board(props) {
 
     console.log(boardForm);
 
-    if(boardForm.userId == "" ){
-      Swal.fire({
-        title: "로그인이 필요한 기능입니다.",
-        icon: "info",
-      });
-    }else if(boardForm.category == ""){
-      Swal.fire({
-        title: "잘못된 접근입니다.",
-        icon: "error",
-      });
-    }
-
     if(boardForm.title == ""){
       Swal.fire({
         title: "제목을 입력해주세요.",
         icon: "info",
       });
+      // 모달창 닫고 boardForm 값 초기화
+      resetBoardForm();
+      return;
     }else if(boardForm.content == ""){
       Swal.fire({
         title: "내용을 입력해주세요.",
         icon: "info",
       });
+      // 모달창 닫고 boardForm 값 초기화
+      resetBoardForm();
+      return;
     }
 
     axios({
-      method: "POST",
+      method: "post",
       data: boardForm,
       url: "board"
     }).then((res) => {
@@ -118,7 +135,10 @@ function Board(props) {
 
     // 페이지 전체 조회
     getBoard();
-  }, [page, props.cateInfo.no]);
+
+    // 게시글 작성 Form 초기화
+    resetBoardForm();
+  }, [page, props.cateInfo.no, props.isLogin]);
 
   const pageHandler = (res) => {
     setPage(res);
@@ -233,7 +253,7 @@ function Board(props) {
               <Button
                 className="mx-4"
                 variant="secondary"
-                onClick={AddModalHandleShow}
+                onClick={AddModalHandle}
               >
                 글 작성
               </Button>
