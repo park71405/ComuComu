@@ -6,6 +6,7 @@ import com.comucomu.comu.Service.BoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -35,7 +36,11 @@ public class BoardController {
 
     // 특정 카테고리의 게시글 추가
     @PostMapping("/board")
-    public int AddBoard(@RequestBody BoardAddRequest boardAddRequest){
+    public int AddBoard(@RequestPart(value="boardForm") BoardAddRequest boardAddRequest, @RequestPart(value="fileList", required = false) MultipartFile fileList){
+
+        // 로직 작성 필요
+
+        
         return boardService.addBoard(boardAddRequest);
     }
 

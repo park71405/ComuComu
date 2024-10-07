@@ -61,11 +61,11 @@ function Login(props) {
 
   return (
     <>
-      <div className="content">
+      <div className="content ">
         <Row>
-          <Col md="12">
-            <Card className="p-5">
-              <CardBody className="p-5">
+          <Col md="12" >
+            <Card className="p-5" style={{ height: "calc(100vh - 140px)" }}>
+              <CardBody className="p-5 mt-5">
                 <Row className="m-3 text-center">
                   <Col md="3 mt-1">
                     <h4>ID : </h4>

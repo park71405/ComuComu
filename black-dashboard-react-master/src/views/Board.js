@@ -18,8 +18,11 @@ import {
   Row,
   Table,
 } from "reactstrap";
+import { Link, useNavigate } from "react-router-dom";
 
 function Board(props) {
+  const navigate = useNavigate();
+
   // 게시글 추가 버튼 클릭 관련 로직
   const [addModalShow, setAddModalShow] = useState(false);
   const AddModalHandleClose = () => setAddModalShow(false);
@@ -29,21 +32,26 @@ function Board(props) {
   const [boardForm, setBoardForm] = useState({
     title: "",
     content: "",
-    userId: (props.isLogin ? props.userInfo.id : ""),
+    userId: props.isLogin ? props.userInfo.id : "",
     category: props.cateInfo.no,
+    files: "",
   });
 
   // 글 작성 버튼 클릭
   const AddModalHandle = () => {
-    if(boardForm.userId == "" ){
+    if (boardForm.userId == "") {
       Swal.fire({
         title: "로그인이 필요한 기능입니다.",
+        text: "로그인 페이지로 이동하겠습니다.",
         icon: "info",
       });
       // 모달창 닫고 boardForm 값 초기화
       resetBoardForm();
+
+      // 로그인 페이지로 이동
+      navigate("/admin/login");
       return;
-    }else if(boardForm.category == ""){
+    } else if (boardForm.category == "") {
       Swal.fire({
         title: "잘못된 접근입니다.",
         icon: "error",
@@ -51,18 +59,19 @@ function Board(props) {
       // 모달창 닫고 boardForm 값 초기화
       resetBoardForm();
       return;
-    }else{
+    } else {
       AddModalHandleShow();
     }
-  }
+  };
 
   // 게시글 추가의 창닫기 버튼 클릭 시 boardForm 값 초기화
   const resetBoardForm = () => {
     setBoardForm({
       title: "",
       content: "",
-      userId: (props.isLogin ? props.userInfo.id : ""),
+      userId: props.isLogin ? props.userInfo.id : "",
       category: props.cateInfo.no,
+      files: "",
     });
     AddModalHandleClose();
   };
@@ -75,6 +84,14 @@ function Board(props) {
     });
   };
 
+  // 글 작성 추가 모달의 파일 업로드 클릭 시 이벤트
+  const fileUpload = (e) => {
+    setBoardForm({
+      ...boardForm,
+      ["files"]: e.target.files[0],
+    });
+  };
+
   // 글 작성 추가 모달의 save버튼 클릭
   const addBoard = () => {
     // 글 작성 추가 모달창 닫기
@@ -82,7 +99,7 @@ function Board(props) {
 
     console.log(boardForm);
 
-    if(boardForm.title == ""){
+    if (boardForm.title == "") {
       Swal.fire({
         title: "제목을 입력해주세요.",
         icon: "info",
@@ -90,7 +107,7 @@ function Board(props) {
       // 모달창 닫고 boardForm 값 초기화
       resetBoardForm();
       return;
-    }else if(boardForm.content == ""){
+    } else if (boardForm.content == "") {
       Swal.fire({
         title: "내용을 입력해주세요.",
         icon: "info",
@@ -100,29 +117,40 @@ function Board(props) {
       return;
     }
 
+    const formData = new FormData();
+    formData.append(
+      "boardForm",
+      new Blob([JSON.stringify(boardForm)], { type: "application/json" })
+    );
+    formData.append("fileList", boardForm.files);
+
     axios({
       method: "post",
-      data: boardForm,
-      url: "board"
-    }).then((res) => {
-      console.log(res);
-    }).catch((err) => {
-      Swal.fire({
-        title: "게시글 작성 실패",
-        text: "잠시 후 다시 시도해주세요",
-        icon: "error",
+      headers: { "Content-Type": "multipart/form-data" },
+      data: formData,
+      url: "/board",
+    })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "게시글 작성 실패",
+          text: "잠시 후 다시 시도해주세요",
+          icon: "error",
+        });
+      })
+      .finally(() => {
+        // 모달창 닫고 boardForm 값 초기화
+        resetBoardForm();
+
+        // 페이지 총 개수 확인
+        getTotalPage();
+
+        // 페이지 전체 조회
+        getBoard();
       });
-    }).finally(() => {
-      // 모달창 닫고 boardForm 값 초기화
-      resetBoardForm();
-      
-      // 페이지 총 개수 확인
-      getTotalPage();
-
-      // 페이지 전체 조회
-      getBoard();
-    });
-
   };
 
   const [cateList, setCateList] = useState([]);
@@ -230,6 +258,19 @@ function Board(props) {
                   />
                 </Col>
               </Row>
+              <Row className="m-1 py-1">
+                <Col sm={3} className="mt-1">
+                  파일 :
+                </Col>
+                <Col sm={9}>
+                  <Input
+                    type="file"
+                    placeholder="Upload Image"
+                    multiple
+                    onChange={fileUpload}
+                  />
+                </Col>
+              </Row>
             </ModalBody>
             <ModalFooter className="justify-content-end m-3">
               <Button
@@ -246,7 +287,7 @@ function Board(props) {
             </ModalFooter>
           </Modal>
           <Col md="12">
-            <Card style={{ height: "calc(100vh - 210px)" }}>
+            <Card style={{ height: "calc(100vh - 140px)" }}>
               <CardHeader className="mx-3">
                 <CardTitle tag="h4">{props.cateInfo.name}</CardTitle>
               </CardHeader>
@@ -270,6 +311,7 @@ function Board(props) {
                         <th>조회수</th>
                         <th>등록일</th>
                         <th>작성자</th>
+                        <td></td>
                       </tr>
                     </thead>
                     <tbody>
@@ -282,6 +324,12 @@ function Board(props) {
                             <td className="col-1">{cate.count}</td>
                             <td className="col-2">{cate.regDate}</td>
                             <td className="col-1">{cate.nickname}</td>
+                            <td>
+                              <i
+                                className="tim-icons icon-settings"
+                                id={cate.no}
+                              ></i>
+                            </td>
                           </tr>
                         );
                       })}

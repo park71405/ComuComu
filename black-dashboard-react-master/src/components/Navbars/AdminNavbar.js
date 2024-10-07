@@ -38,11 +38,12 @@ import {
   NavbarToggler,
   ModalHeader,
 } from "reactstrap";
-import { Link, Navigate, Route } from "react-router-dom";
+import { Link, Navigate, Route, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import axios from "axios";
 
 function AdminNavbar(props) {
+  const navigate = useNavigate();
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [modalSearch, setmodalSearch] = React.useState(false);
   const [color, setcolor] = React.useState("navbar-transparent");
@@ -86,6 +87,9 @@ function AdminNavbar(props) {
 
     props.loginHandler(false);
     props.loginUserInfoHandler({});
+
+    // 로그인 페이지로 이동
+    navigate("/admin/login");
   };
 
   return (

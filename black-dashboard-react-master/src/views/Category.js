@@ -316,7 +316,7 @@ function Category(props) {
             </ModalFooter>
           </Modal>
           <Col md="12">
-            <Card>
+            <Card style={{ height: "calc(100vh - 140px)" }}>
               <CardHeader>
                 <CardTitle tag="h4">{props.cateInfo.name}</CardTitle>
               </CardHeader>

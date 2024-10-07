@@ -80,75 +80,12 @@ function Chat(props) {
     <>
       <div className="content">
         <Row>
-          <Col sm={5}>
-            <div style={{ minHeight: "fit-content" }}>
-              <Card style={{ height: "calc(100vh - 100px)" }}>
-                <CardHeader>
-                  <CardTitle tag="h4">Chat List</CardTitle>
-                  <Row className="justify-content-center">
-                    <Col sm={8} className="pt-1">
-                      <Input
-                        placeholder="SEARCH"
-                        type="text"
-                        className=""
-                        id="inputChat"
-                        style={{ backgroundColor: "white", color: "black" }}
-                      />
-                    </Col>
-                    <Col sm={3}>
-                      <Button className="">+</Button>
-                    </Col>
-                  </Row>
-                </CardHeader>
-                <CardBody>
-                  <Table className="tablesorter text-center">
-                    <tbody>
-                      <tr>
-                        <td>haha</td>
-                      </tr>
-                      {rooms.map((room, index) => {
-                        <tr key={index}>
-                          <td>{room}</td>
-                        </tr>
-                      })}
-                    </tbody>
-                  </Table>
-                </CardBody>
-              </Card>
-            </div>
-          </Col>
-          <Col>
-            <div style={{ minHeight: "fit-content" }}>
-              <Card style={{ height: "calc(100vh - 100px)" }}>
-                <CardHeader>
-                  <CardTitle tag="h4">Chat Name</CardTitle>
-                </CardHeader>
-                <CardBody className="pl-3 d-flex align-items-end">
-                  <Table
-                    id="chatList"
-                    className="tablesorter text-center mb-5 mt-3 "
-                  >
-                    <tbody>
-                      {message.map((message, index) => {
-                        if (message.type == "my") {
-                          return (
-                            <tr key={index}>
-                              <td className="text-right px-4">{message.msg}</td>
-                            </tr>
-                          );
-                        } else {
-                          return (
-                            <tr key={index}>
-                              <td className="text-left px-4">{message.msg}</td>
-                            </tr>
-                          );
-                        }
-                      })}
-                    </tbody>
-                  </Table>
-                </CardBody>
-                <Row className="mb-2 mx-2">
-                  <Col xs={9} className="pl-5 mt-1">
+          <Col md={5}>
+            <Card style={{ height: "calc(100vh - 140px)" }}>
+              <CardHeader>
+                <CardTitle tag="h4">Chat List</CardTitle>
+                <Row className="justify-content-center">
+                  <Col sm={8} className="pt-1">
                     <Input
                       placeholder="SEARCH"
                       type="text"
@@ -157,14 +94,73 @@ function Chat(props) {
                       style={{ backgroundColor: "white", color: "black" }}
                     />
                   </Col>
-                  <Col xs={3} className="">
-                    <Button className="" onClick={clickSendChatBtn}>
-                      <i className="tim-icons icon-send" />
-                    </Button>
+                  <Col sm={3}>
+                    <Button className="">+</Button>
                   </Col>
                 </Row>
-              </Card>
-            </div>
+              </CardHeader>
+              <CardBody>
+                <Table className="tablesorter text-center">
+                  <tbody>
+                    <tr>
+                      <td>haha</td>
+                    </tr>
+                    {rooms.map((room, index) => {
+                      <tr key={index}>
+                        <td>{room}</td>
+                      </tr>;
+                    })}
+                  </tbody>
+                </Table>
+              </CardBody>
+            </Card>
+          </Col>
+          <Col>
+            <Card style={{ height: "calc(100vh - 140px)" }}>
+              <CardHeader>
+                <CardTitle tag="h4">Chat Name</CardTitle>
+              </CardHeader>
+              <CardBody className="pl-3 d-flex align-items-end">
+                <Table
+                  id="chatList"
+                  className="tablesorter text-center mb-5 mt-3 "
+                >
+                  <tbody>
+                    {message.map((message, index) => {
+                      if (message.type == "my") {
+                        return (
+                          <tr key={index}>
+                            <td className="text-right px-4">{message.msg}</td>
+                          </tr>
+                        );
+                      } else {
+                        return (
+                          <tr key={index}>
+                            <td className="text-left px-4">{message.msg}</td>
+                          </tr>
+                        );
+                      }
+                    })}
+                  </tbody>
+                </Table>
+              </CardBody>
+              <Row className="mb-2 mx-2">
+                <Col xs={9} className="pl-5 mt-1">
+                  <Input
+                    placeholder="SEARCH"
+                    type="text"
+                    className=""
+                    id="inputChat"
+                    style={{ backgroundColor: "white", color: "black" }}
+                  />
+                </Col>
+                <Col xs={3} className="">
+                  <Button className="" onClick={clickSendChatBtn}>
+                    <i className="tim-icons icon-send" />
+                  </Button>
+                </Col>
+              </Row>
+            </Card>
           </Col>
         </Row>
       </div>
