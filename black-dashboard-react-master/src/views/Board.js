@@ -28,6 +28,11 @@ function Board(props) {
   const AddModalHandleClose = () => setAddModalShow(false);
   const AddModalHandleShow = () => setAddModalShow(true);
 
+  // 게시글 조회 관련 로직
+  const [viewModalShow, setViewModalShow] = useState(false);
+  const ViewModalHandleClose = () => setViewModalShow(false);
+  const ViewModalHandleShow = () => setViewModalShow(true);
+
   // 카테고리 추가 Form
   const [boardForm, setBoardForm] = useState({
     title: "",
@@ -226,12 +231,57 @@ function Board(props) {
       });
   };
 
-  const clickButton = () => {};
+  // 게시글 클릭 이벤트
+  const boardRowClick = (boardNo) => {
+
+    // 게시글 파일 정보 불러올러얌~
+    axios({
+      method: "GET",
+      url: "board/searchBoardDetail?no=" + boardNo,
+    }).then(() => {
+      console.log("요청 성공");
+    }).catch((err) => {
+      Swal.fire({
+        title: "잘못된 접근입니다.",
+        icon: "error",
+      });
+    })
+
+    // 모달 창 띄우기
+    ViewModalHandleShow();
+
+  };
 
   return (
     <>
       <div className="content">
         <Row>
+          <Modal isOpen={viewModalShow}>
+            <ModalBody className="mt-1">
+              <Row className="m-1 py-1">
+                <Col sm={3} className="mt-1">
+                  제목 :{" "}
+                </Col>
+                <Col sm={9}>
+                  db에서 제목 가지고 와야 함당~
+                </Col>
+              </Row>
+              <Row className="m-1 py-1">
+                <Col sm={3} className="mt-1">
+                  내용 :{" "}
+                </Col>
+                <Col sm={9}>
+                  db에서 내용 가지고 와야 함당~
+                </Col>
+              </Row>
+            </ModalBody>
+            <ModalFooter className="justify-content-end m-3">
+              <Button size="sm" variant="primary" onClick={ViewModalHandleClose}>
+                Close
+              </Button>
+            </ModalFooter>
+          </Modal>
+
           <Modal isOpen={addModalShow}>
             <ModalBody className="mt-1">
               <Row className="m-1 py-1">
@@ -328,9 +378,9 @@ function Board(props) {
                     <tbody>
                       {cateList.map((cate) => {
                         return (
-                          <tr key={cate.no}>
+                          <tr key={cate.no} >
                             <td className="col-1">{cate.no}</td>
-                            <td className="col-2">{cate.title}</td>
+                            <td className="col-2" onClick={() => boardRowClick(cate.no)}>{cate.title}</td>
                             <td className="col-3">{cate.content}</td>
                             <td className="col-1">{cate.count}</td>
                             <td className="col-2">{cate.regDate}</td>

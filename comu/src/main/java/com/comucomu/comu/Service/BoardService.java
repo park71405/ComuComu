@@ -1,6 +1,7 @@
 package com.comucomu.comu.Service;
 
 import com.comucomu.comu.DTO.Board.BoardAddRequest;
+import com.comucomu.comu.DTO.Board.BoardDetailResponse;
 import com.comucomu.comu.DTO.Board.BoardFileAddRequest;
 import com.comucomu.comu.DTO.Board.BoardResponse;
 import com.comucomu.comu.Repository.BoardRepository;
@@ -63,6 +64,13 @@ public class BoardService {
                                                         .collect(Collectors.toList()));
 
         return boardNo;
+    }
+
+    // board_no 기반 게시글 조회
+    public BoardDetailResponse findBoardDetailByBoardno(int boardNo){
+        return boardRepository.findById(boardNo)
+                .map(BoardDetailResponse::new)
+                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. boardNo = " + boardNo));
     }
 
 }
