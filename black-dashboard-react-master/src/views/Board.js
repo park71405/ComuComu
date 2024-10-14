@@ -86,9 +86,13 @@ function Board(props) {
 
   // 글 작성 추가 모달의 파일 업로드 클릭 시 이벤트
   const fileUpload = (e) => {
+
+    console.log("123123123")
+    console.log(e.target.files);
+
     setBoardForm({
       ...boardForm,
-      ["files"]: e.target.files[0],
+      ["files"]: e.target.files,
     });
   };
 
@@ -96,8 +100,6 @@ function Board(props) {
   const addBoard = () => {
     // 글 작성 추가 모달창 닫기
     AddModalHandleClose();
-
-    console.log(boardForm);
 
     if (boardForm.title == "") {
       Swal.fire({
@@ -122,8 +124,12 @@ function Board(props) {
       "boardForm",
       new Blob([JSON.stringify(boardForm)], { type: "application/json" })
     );
-    formData.append("fileList", boardForm.files);
 
+    for(let i=0; i<boardForm.files.length; i++){
+      formData.append("fileList", boardForm.files[i]);
+    }
+    
+    
     axios({
       method: "post",
       headers: { "Content-Type": "multipart/form-data" },
@@ -151,6 +157,7 @@ function Board(props) {
         // 페이지 전체 조회
         getBoard();
       });
+     
   };
 
   const [cateList, setCateList] = useState([]);
@@ -311,7 +318,11 @@ function Board(props) {
                         <th>조회수</th>
                         <th>등록일</th>
                         <th>작성자</th>
-                        <td></td>
+                        {props.isLogin ? (
+                          <>
+                            <th></th>
+                          </>
+                        ) : null}
                       </tr>
                     </thead>
                     <tbody>
@@ -319,17 +330,27 @@ function Board(props) {
                         return (
                           <tr key={cate.no}>
                             <td className="col-1">{cate.no}</td>
-                            <td className="col-3">{cate.title}</td>
-                            <td className="col-4">{cate.content}</td>
+                            <td className="col-2">{cate.title}</td>
+                            <td className="col-3">{cate.content}</td>
                             <td className="col-1">{cate.count}</td>
                             <td className="col-2">{cate.regDate}</td>
                             <td className="col-1">{cate.nickname}</td>
-                            <td>
-                              <i
-                                className="tim-icons icon-settings"
-                                id={cate.no}
-                              ></i>
-                            </td>
+                            {(props.isLogin && cate.nickname === props.userInfo.nickname) ? (
+                              <>
+                                <td className="col-1">
+                                  <i
+                                    className="tim-icons icon-settings"
+                                    id={cate.no}
+                                  ></i>
+                                </td>
+                                <td className="col-1">
+                                  <i
+                                    className="tim-icons icon-trash-simple"
+                                    id={cate.no}
+                                  ></i>
+                                </td>
+                              </>
+                            ) : null}
                           </tr>
                         );
                       })}

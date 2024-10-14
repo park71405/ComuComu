@@ -16,6 +16,7 @@ public class BoardController {
 
     private final BoardService boardService;
 
+
     // 특정 카테고리의 게시글 전체 조회
     @GetMapping("/board/searchAllByCate")
     public ResponseEntity<List<BoardResponse>> findAllByCate(@RequestParam(value="no") String no, @RequestParam(value="page") String page){
@@ -36,12 +37,10 @@ public class BoardController {
 
     // 특정 카테고리의 게시글 추가
     @PostMapping("/board")
-    public int AddBoard(@RequestPart(value="boardForm") BoardAddRequest boardAddRequest, @RequestPart(value="fileList", required = false) MultipartFile fileList){
-
-        // 로직 작성 필요
-
+    public int AddBoard(@RequestPart(value="boardForm") BoardAddRequest boardAddRequest
+            , @RequestPart(value="fileList", required = false) List<MultipartFile> fileList) throws Exception {
         
-        return boardService.addBoard(boardAddRequest);
+        return boardService.addBoard(boardAddRequest, fileList);
     }
 
 }
