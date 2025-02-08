@@ -16,7 +16,8 @@ public class FileService {
 
     // board_no를 바탕으로 파일 정보 탐색
     public List<FileResponse> findFileByBoardNo(int board_no){
-        fileRepository.findByBoardNo(board_no);
+        //fileRepository.findByBoardNo(board_no);
+        return null;
     }
 
 }

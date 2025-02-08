@@ -12,7 +12,7 @@ public class FileResponse {
     private long size;
 
     @Builder
-    public File(int fileNo, String originalName, String path, long size){
+    public FileResponse(int fileNo, String originalName, String path, long size){
         this.fileNo = fileNo;
         this.originalName = originalName;
         this.path = path;
